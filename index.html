@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТЕСТЫ</title>
+    <style>
+        :root {
+            --blue: #b9e5fa;
+            --blue-dark: #5ba9d6;
+            --pink: #f7d5e8;
+            --pink-dark: #d98bb5;
+            --background: #f7faff;
+            --text: #35445c;
+            --white: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        header {
+            height: 82px;
+            background: linear-gradient(110deg, #c9ecff, #f8dcec);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+            box-shadow: 0 3px 15px #b9cde322;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #455d7b;
+        }
+
+        .header-label { font-size: 14px; color: #596c85; }
+        .layout { display: flex; min-height: calc(100vh - 82px); }
+
+        aside {
+            width: 250px;
+            flex-shrink: 0;
+            padding: 30px 18px;
+            background: #fff;
+            border-right: 1px solid #e5edf7;
+        }
+
+        .menu-caption {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #98a5b9;
+            font-weight: 700;
+            margin: 0 12px 18px;
+        }
+
+        .menu-link {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 15px;
+            margin-bottom: 8px;
+            border: none;
+            border-radius: 13px;
+            background: transparent;
+            color: #62718a;
+            text-align: left;
+            font-size: 15px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .menu-link:hover { background: #f0f7ff; color: var(--blue-dark); }
+
+        .menu-link.active {
+            background: linear-gradient(110deg, #dff3ff, #fce8f3);
+            color: #405c7b;
+            font-weight: 700;
+        }
+
+        .menu-icon { font-size: 19px; }
+        .submenu {
+            margin-left: 12px;
+            width: calc(100% - 12px);
+            font-size: 14px;
+            border-left: 2px solid #e4eaf7;
+            border-radius: 0 12px 12px 0;
+        }
+        .submenu.active { border-left-color: var(--pink-dark); }
+
+        main { flex: 1; min-width: 0; padding: 42px; }
+
+        .page { display: none; animation: appear 0.25s ease; }
+        .page.active { display: block; }
+
+        @keyframes appear {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome {
+            padding: 45px;
+            border-radius: 25px;
+            background: linear-gradient(120deg, #d9f1ff, #fbe3f1);
+            margin-bottom: 28px;
+        }
+
+        .eyebrow {
+            color: #6784a5;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        h1 { font-size: clamp(30px, 4vw, 43px); margin-bottom: 17px; color: #344e70; }
+        h2 { font-size: 24px; margin-bottom: 18px; color: #405674; }
+        h3 { font-size: 18px; margin-bottom: 12px; }
+        p { line-height: 1.8; color: #66758b; }
+        .welcome p { max-width: 650px; }
+
+        .section {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 21px;
+            border: 1px solid #eaf0f7;
+            margin-bottom: 24px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e8eef7;
+            border-radius: 19px;
+            padding: 25px;
+            transition: 0.25s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 28px #a8c6e522;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #d9f1ff, #fbe0ef);
+            border-radius: 15px;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .card p { font-size: 14px; margin-bottom: 18px; }
+
+        .button {
+            display: inline-block;
+            border: none;
+            border-radius: 11px;
+            padding: 12px 19px;
+            background: linear-gradient(100deg, #bde8fc, #f6d3e7);
+            color: #405674;
+            font-weight: 700;
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .button:hover { filter: brightness(0.97); transform: translateY(-1px); }
+
+        .instruction-list { display: grid; gap: 19px; }
+        .instruction-item { display: flex; gap: 15px; align-items: flex-start; }
+
+        .number {
+            flex-shrink: 0;
+            width: 35px;
+            height: 35px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: #e1f3ff;
+            color: #508cb5;
+            font-weight: 800;
+        }
+
+        .question { padding: 23px 0; border-bottom: 1px solid #edf1f7; }
+        .question p { color: var(--text); font-weight: 600; margin-bottom: 14px; }
+
+        .answer {
+            display: block;
+            padding: 11px 14px;
+            border: 1px solid #e4ebf5;
+            border-radius: 10px;
+            margin: 8px 0;
+            cursor: pointer;
+            color: #62718a;
+            transition: 0.2s;
+        }
+
+        .answer:hover { background: #f4f9ff; }
+        .answer input { margin-right: 9px; accent-color: #87bce0; }
+
+        .result {
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 13px;
+            background: #edf7ff;
+            display: none;
+            line-height: 1.8;
+        }
+
+        footer { padding: 25px; text-align: center; color: #9aa8bb; font-size: 12px; }
+
+        .triangle-theory { margin: 14px 0 8px; padding: 16px 18px; background: #f0f8ff; border-left: 4px solid #5ba9d6; border-radius: 10px; color: #34445c; line-height: 1.65; }
+        .triangle-theory strong { display: block; margin-bottom: 6px; color: #24496b; }
+        .triangle-theory ul { margin: 6px 0 0 20px; }
+        .triangle-question { padding: 20px 0; border-bottom: 1px solid #edf1f7; }
+        .triangle-question p { color: var(--text); font-weight: 600; margin-bottom: 10px; }
+        .triangle-question label { display: block; color: #62718a; font-size: 13px; margin-bottom: 6px; }
+        .triangle-input { width: 100%; max-width: 520px; padding: 12px 14px; border: 1px solid #dce6f2; border-radius: 10px; font: inherit; color: var(--text); }
+        .triangle-input:focus { outline: 2px solid #b9e5fa; border-color: #5ba9d6; }
+        .triangle-feedback { font-size: 13px; margin-top: 7px; }
+        .triangle-feedback.correct { color: #21845b; }
+        .triangle-feedback.incorrect { color: #b84d6d; }
+        .choice-option { display:block; font-size:15px; }
+        .choice-option:has(input:checked) { background:#eaf5ff; border-color:#88bad8; color:#334c6a; }
+        .choice-option input:disabled { cursor:default; }
+        .review-task { margin-top:16px; padding:19px; border:1px solid #e5eaf3; border-radius:13px; background:#fff; }
+        .review-task p {color:#35445c; font-weight:600; line-height:1.5; }
+        .review-chosen {font-size:14px;color:#718096; margin:8px 0 13px;}
+        .review-task details { background:#f0f8ff; border-radius:10px;padding:12px 15px; }
+        .review-task summary {cursor:pointer;color:#3d739b;font-weight:700;}
+        .review-task details p {margin-top:12px; font-weight:400;line-height:1.65;}
+        #triangle-review {margin-top:18px;}
+        .answer.correct-answer {background:#e4f6e9;border:1px solid #87cda0;color:#20593a;}
+        .answer.wrong-answer {background:#fde9f0;border:1px solid #e7a3bb;color:#743c56;}
+        .answer.answer-not-chosen {opacity:.78;}
+        .review-task.is-correct {border-left:5px solid #6eba89;background:#f2fbf4;}
+        .review-task.is-wrong {border-left:5px solid #e8a0bc;background:#fff4f8;}
+        .review-explanation {margin-top:11px;border-radius:10px;padding:14px 16px;background:#fff;line-height:1.75;color:#35445c;}
+        .review-explanation strong {color:#344e70;}
+        .review-chosen {font-weight:700;margin-top:9px;}
+        .review-task.is-correct .review-chosen {color:#237e4b;}
+        .review-task.is-wrong .review-chosen {color:#aa506f;}
+        .review-task .answer {margin:7px 0;font-size:14px;cursor:default;}
+        #triangle-charts {margin:22px 0;}
+        .chart-grid {display:grid;grid-template-columns:minmax(240px, 1fr) minmax(300px, 1.6fr);gap:18px;}
+        .chart-card {border:1px solid #e6edf5;border-radius:18px;padding:22px;background:white;min-width:0;}
+        .chart-card h3 {font-size:17px;margin-bottom:12px;color:#405674;}
+        .donut-wrap {display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:18px;}
+        .donut {height:185px;width:185px;border-radius:50%;position:relative;flex-shrink:0;}
+        .donut:after {content:'';position:absolute;inset:37px;background:white;border-radius:50%;}
+        .donut-center {position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;flex-direction:column;pointer-events:none;}
+        .donut-center b {font-size:29px;color:#35445c;}
+        .donut-center small {font-size:12px;color:#7b8da1;}
+        .chart-legend {display:grid;gap:10px;font-size:13px;}
+        .legend-dot {display:inline-block;width:11px;height:11px;border-radius:4px;margin-right:8px;}
+        .line-chart {width:100%;height:auto;display:block;overflow:visible;}
+        .chart-tip {font-size:13px;color:#66758b;margin-top:12px;line-height:1.6;}
+        .topic-list {display:grid;gap:9px;margin-top:14px;font-size:13px;}
+        .topic-row {display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #edf1f7;padding-bottom:7px;}
+        .topic-row.low {color:#9b3f67;font-weight:700;}
+        @media (max-width:850px) {.chart-grid {grid-template-columns:1fr;}}
+        
+
+        .submission-panel { margin: 0 0 24px; padding: 22px; background: #f5faff; border: 1px solid #dceaf7; border-radius: 16px; }
+        .submission-panel label { display: block; font-weight: 700; margin-bottom: 9px; }
+        .submission-panel small { display: block; color: #66758b; line-height: 1.5; margin-top: 9px; }
+        .submission-status { display: none; margin: 18px 0; padding: 15px; border-radius: 12px; line-height: 1.6; }
+        .submission-status.info { display: block; background: #eaf5ff; color: #365c83; }
+        .submission-status.success { display: block; background: #e8f7ef; color: #226746; }
+        .submission-status.error { display: block; background: #fff0f2; color: #9b3f53; }
+        .button:disabled { cursor: not-allowed; opacity: .55; transform: none; }
+        .triangle-input:disabled { background: #f1f4f8; }
+
+        @media (max-width: 700px) {
+            header { height: 70px; padding: 0 18px; }
+            .logo { font-size: 22px; }
+            .header-label { font-size: 11px; }
+            .layout { display: block; }
+            aside {
+                width: 100%;
+                padding: 12px;
+                border-right: none;
+                border-bottom: 1px solid #e5edf7;
+                display: flex;
+                gap: 7px;
+                overflow-x: auto;
+            }
+            .menu-caption { display: none; }
+            .menu-link {
+                flex-shrink: 0;
+                width: auto;
+                margin: 0;
+                padding: 11px 13px;
+                font-size: 13px;
+            }
+            .submenu { margin-left: 0; width: auto; }
+            main { padding: 20px 14px; }
+            .welcome { padding: 28px 22px; }
+            .section { padding: 22px; }
+            .cards { grid-template-columns: 1fr; }
+        }
+    
+/* Тригонометрия: встроенные иллюстрации и доступная проверка */
+.trig-picture{margin:14px 0 18px;padding:12px;background:#f7faff;border:1px solid #e4edf8;border-radius:16px;max-width:510px}
+.trig-picture svg{width:100%;height:auto;display:block}
+.trig-question{padding:20px 0;border-bottom:1px solid #edf1f7}
+.trig-question p{font-weight:650;color:#35445c;margin-bottom:12px}
+.trig-question .answer{font-weight:400}
+.trig-muted{font-size:13px;color:#7b889b;margin:9px 0}
+</style>
+</head>
+
+<body>
+<header>
+    <div class="logo">ТЕСТЫ</div>
+    <div class="header-label">Пространство для знаний ✦</div>
+</header>
+
+<div class="layout">
+    <aside>
+        <div class="menu-caption">НАВИГАЦИЯ</div>
+
+        <button class="menu-link active" data-page="home">
+            <span class="menu-icon">⌂</span> Главная
+        </button>
+
+        <button class="menu-link" data-page="tests">
+            <span class="menu-icon">✎</span> Тесты
+        </button>
+
+        <button class="menu-link submenu" data-page="math">
+            <span class="menu-icon">📐</span> Математика
+        </button>
+
+        <button class="menu-link submenu" data-page="trigonometry"><span class="menu-icon">◉</span> Тригонометрия</button>
+
+        <button class="menu-link submenu" data-page="geometry">
+            <span class="menu-icon">△</span> Геометрия
+        </button>
+
+        <button class="menu-link submenu" data-page="triangles">
+            <span class="menu-icon">◢</span> Треугольники
+        </button>
+
+        <button class="menu-link" data-page="instructions">
+            <span class="menu-icon">☷</span> Инструкция
+        </button>
+    </aside>
+
+    <main>
+        <!-- ГЛАВНАЯ -->
+        <section class="page active" id="home">
+            <div class="welcome">
+                <div class="eyebrow">ТВОЯ ТЕРРИТОРИЯ ЗНАНИЙ</div>
+                <h1>Добро пожаловать!</h1>
+                <p>
+                    Здесь ты можешь проверять свои знания, проходить тесты
+                    и узнавать больше о том, что уже умеешь.
+                    Выбирай интересующий раздел и начинай!
+                </p>
+                <br>
+                <button class="button" onclick="showPage('tests')">Перейти к тестам →</button>
+            </div>
+
+            <div class="section">
+                <h2>Как пользоваться сайтом?</h2>
+                <div class="instruction-list">
+                    <div class="instruction-item">
+                        <div class="number">1</div>
+                        <div><h3>Выбери раздел</h3><p>Открой меню слева и перейди в нужный раздел.</p></div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="number">2</div>
+                        <div><h3>Пройди тест</h3><p>Прочитай вопросы и выбери подходящие ответы.</p></div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="number">3</div>
+                        <div><h3>Посмотри результат</h3><p>После завершения теста проверь количество правильных ответов.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Начни с малого</h2>
+                <p>Каждый тест — это возможность узнать что-то новое. Не бойся ошибаться: ошибки тоже помогают учиться.</p>
+            </div>
+        </section>
+
+        <!-- ОБЩИЙ РАЗДЕЛ ТЕСТОВ -->
+        <section class="page" id="tests">
+            <div class="welcome">
+                <div class="eyebrow">ПРОВЕРЬ СЕБЯ</div>
+                <h1>Тесты</h1>
+                <p>Выбирай предмет, отвечай на вопросы и проверяй свои знания.</p>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">📐</div>
+                    <h3>Математика</h3>
+                    <p>Числа, выражения, уравнения и геометрия.</p>
+                    <button class="button" onclick="showPage('math')">Открыть раздел</button>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚛️</div>
+                    <h3>Физика</h3>
+                    <p>Физические явления, величины и законы.</p>
+                    <button class="button" onclick="alert('Тесты по физике пока не добавлены.')">Скоро</button>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧬</div>
+                    <h3>Биология</h3>
+                    <p>Живые организмы, природа и человек.</p>
+                    <button class="button" onclick="alert('Тесты по биологии пока не добавлены.')">Скоро</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- МАТЕМАТИКА -->
+        <section class="page" id="math">
+            <div class="welcome">
+                <div class="eyebrow">ПРЕДМЕТ</div>
+                <h1>Математика</h1>
+                <p>Выбери раздел математики, чтобы перейти к тестам.</p>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">📐</div>
+                    <h3>Геометрия</h3>
+                    <p>Фигуры, теоремы, свойства и задачи.</p>
+                    <button class="button" onclick="showPage('geometry')">Открыть раздел</button>
+                </div>
+                <div class="card"><div class="card-icon">◉</div><h3>Тригонометрия</h3><p>Окружность, формулы, уравнения и отбор корней ЕГЭ.</p><button class="button" onclick="showPage('trigonometry')">Открыть тест</button></div>
+            </div>
+        </section>
+
+        <!-- ГЕОМЕТРИЯ -->
+        <section class="page" id="geometry">
+            <div class="welcome">
+                <div class="eyebrow">МАТЕМАТИКА / ГЕОМЕТРИЯ</div>
+                <h1>Геометрия</h1>
+                <p>Выбери тему и проверь свои знания.</p>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">△</div>
+                    <h3>Треугольники</h3>
+                    <p>Тест по теме «Треугольники».</p>
+                    <button class="button" onclick="showPage('triangles')">Открыть тест</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ТЕСТ ТРЕУГОЛЬНИКИ -->
+        <section class="page" id="triangles">
+            <div class="welcome">
+                <div class="eyebrow">МАТЕМАТИКА / ГЕОМЕТРИЯ</div>
+                <h1>Треугольники</h1>
+                <p>36 заданий по теме «Треугольники». Выбери один вариант ответа в каждом задании и заверши тест, чтобы узнать результат.</p>
+            </div>
+            <div class="section">
+                <h2>Лист заданий</h2>
+                <div class="submission-panel">
+                    <label for="student-name">Имя и фамилия ученика *</label>
+                    <input class="triangle-input" id="student-name" type="text" maxlength="120" placeholder="Например: Иван Петров" autocomplete="name" required>
+                    <small>После завершения теста имя, ответы, ошибки и результат будут переданы преподавателю в Google Таблицу. Не указывай лишние личные данные.</small>
+                </div>
+                <p>В каждом задании один правильный вариант. После завершения увидишь балл, диаграммы по темам и подробный разбор: правильные ответы будут зелёными, ошибки — светло-розовыми, с объяснениями.</p>
+                <div id="triangle-questions"></div>
+                <button class="button" id="submit-triangle-button" type="button" onclick="submitTriangleTest()">Завершить тест и отправить преподавателю</button>
+                <button class="button" id="retry-triangle-button" type="button" onclick="retryTriangleTest()" style="display:none">Повторить отправку</button>
+                <button class="button" type="button" onclick="resetTriangleAnswers()">Начать новую попытку</button>
+                <div class="submission-status" id="submission-status" role="status" aria-live="polite"></div>
+                <div class="result" id="triangle-result" role="status" aria-live="polite"></div>
+                <div id="triangle-charts" hidden></div>
+                <button class="button" id="review-toggle" type="button" onclick="toggleTriangleReview()" style="display:none;margin-top:15px">Посмотреть подробный разбор</button>
+                <div id="triangle-review" hidden></div>
+                <iframe id="submission-frame" name="submission-frame" title="Служебная отправка результатов" style="display:none"></iframe>
+                <form id="submission-form" method="POST" target="submission-frame" style="display:none">
+                    <input type="hidden" name="payload" id="submission-payload">
+                </form>
+                <br>
+                <button class="button" onclick="showPage('geometry')">← Назад к геометрии</button>
+            </div>
+        </section>
+
+        <!-- ТРИГОНОМЕТРИЯ -->
+        <section class="page" id="trigonometry">
+          <div class="welcome"><div class="eyebrow">МАТЕМАТИКА / ПОДГОТОВКА К ЕГЭ</div><h1>Тригонометрия</h1><p>30 заданий: тригонометрическая окружность, одинаковые синусы и косинусы, выражения, уравнения и отбор корней на отрезке.</p></div>
+          <div class="section">
+            <h2>Тест с теорией</h2>
+            <div class="submission-panel"><label for="trig-student-name">Имя и фамилия ученика *</label><input class="triangle-input" id="trig-student-name" type="text" maxlength="120" placeholder="Например: Анна Иванова" autocomplete="name"><small>После завершения ответы и результат отправятся преподавателю в ту же Google Таблицу. По каждому разделу можно повторить теорию перед выполнением.</small></div>
+            <div class="trig-muted">В каждом задании выбери один ответ. После завершения появятся зелёные правильные и светло-розовые неверные ответы с объяснениями, круговая и столбчатая диаграммы.</div>
+            <div id="trig-questions"></div>
+            <button class="button" type="button" id="submit-trig-button" onclick="submitTrigTest()">Завершить тест и отправить</button>
+            <button class="button" type="button" id="retry-trig-button" onclick="sendTrigSubmission()" style="display:none">Повторить отправку</button>
+            <button class="button" type="button" onclick="resetTrigTest()">Начать новую попытку</button>
+            <div class="submission-status" id="trig-status" role="status" aria-live="polite"></div>
+            <div class="result" id="trig-result" role="status" aria-live="polite"></div>
+            <div id="trig-charts" hidden></div>
+            <button class="button" id="trig-review-toggle" type="button" style="display:none;margin-top:15px" onclick="toggleTrigReview()">Посмотреть разбор заданий</button>
+            <div id="trig-review" hidden></div>
+            <iframe name="trig-frame" id="trig-frame" title="Служебная отправка результатов" style="display:none"></iframe>
+            <form id="trig-form" method="POST" target="trig-frame" style="display:none"><input id="trig-payload" type="hidden" name="payload"></form>
+            <br><button class="button" onclick="showPage('math')">← Назад к математике</button>
+          </div>
+        </section>
+
+        <!-- ИНСТРУКЦИЯ -->
+        <section class="page" id="instructions">
+            <div class="welcome">
+                <div class="eyebrow">ПОЛЕЗНАЯ ИНФОРМАЦИЯ</div>
+                <h1>Инструкция</h1>
+                <p>Несколько простых правил для комфортного прохождения тестов.</p>
+            </div>
+            <div class="section">
+                <div class="instruction-list">
+                    <div class="instruction-item">
+                        <div class="number">1</div>
+                        <div><h3>Выбери предмет</h3><p>Зайди в раздел «Тесты» и выбери интересующую тему.</p></div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="number">2</div>
+                        <div><h3>Внимательно читай вопросы</h3><p>Не торопись и обдумывай каждый вариант ответа.</p></div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="number">3</div>
+                        <div><h3>Заверши тест</h3><p>Нажми кнопку проверки, чтобы узнать результат.</p></div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="number">4</div>
+                        <div><h3>Попробуй ещё раз</h3><p>Если допустил ошибки, повтори материал и пройди тест снова.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>ТЕСТЫ · Учись в своём темпе ♡</footer>
+    </main>
+</div>
+
+<script>
+    // Переключение страниц сайта
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+
+        const target = document.getElementById(pageId);
+        if (target) {
+            target.classList.add('active');
+        }
+
+        document.querySelectorAll('.menu-link').forEach(link => {
+            link.classList.toggle('active', link.dataset.page === pageId);
+        });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Обработка пунктов бокового меню
+    document.querySelectorAll('.menu-link').forEach(link => {
+        link.addEventListener('click', () => {
+            showPage(link.dataset.page);
+        });
+    });
+
+    const triangleQuestions = [
+      {section:"Часть 1. Виды треугольников и углы", q:"В треугольнике два угла равны 48° и 67°. Найдите третий угол. Выберите ответ.", a:["65"]},
+      {q:"Один из углов равнобедренного треугольника равен 100°. Найдите два остальных угла. Выберите ответ.", a:["40 40","40, 40","40; 40"]},
+      {q:"В равнобедренном треугольнике угол при основании равен 35°. Найдите угол при вершине. Выберите ответ.", a:["110"]},
+      {q:"Могут ли углы треугольника быть равны 90°, 60° и 30°? Выберите ответ.", a:["да","да, могут","могут"]},
+      {q:"Углы треугольника равны 42°, 48° и 90°. Какой это треугольник по углам?", a:["прямоугольный","прямоугольный треугольник"]},
+      {section:"Часть 2. Существование треугольника", q:"Можно ли построить треугольник со сторонами 3 см, 5 см и 8 см? Выберите ответ.", a:["нет","нельзя"]},
+      {q:"Две стороны треугольника равны 7 см и 11 см. Какие целые значения может принимать третья сторона? Выберите ответ.", a:["5 6 7 8 9 10 11 12 13 14 15 16 17","5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17"]},
+      {q:"Периметр равнобедренного треугольника равен 32 см, боковая сторона — 10 см. Найдите основание. Выберите ответ.", a:["12"]},
+      {q:"Периметр треугольника равен 27 см. Две стороны равны 8 см и 12 см. Найдите третью сторону. Выберите ответ.", a:["7"]},
+      {section:"Часть 3. Равенство треугольников", q:"Какая тройка признаков равенства треугольников указана верно?", a:["две стороны и угол между ними; сторона и два прилежащих угла; три стороны","по двум сторонам и углу между ними, по стороне и двум прилежащим углам, по трём сторонам","по двум сторонам и углу между ними; по стороне и двум прилежащим углам; по трём сторонам"]},
+      {q:"В треугольниках ABC и DEF: AB = DE, AC = DF, ∠A = ∠D. По какому признаку равны треугольники?", a:["по двум сторонам и углу между ними","первый признак","по первому признаку"]},
+      {q:"В равнобедренном треугольнике медиана к основанию одновременно является высотой и биссектрисой. Выберите ответ.", a:["да"]},
+      {q:"AB = A₁B₁, BC = B₁C₁, ∠B = ∠B₁. Какой признак равенства можно применить?", a:["по двум сторонам и углу между ними","первый признак","по первому признаку"]},
+      {section:"Часть 4. Медиана, биссектриса и высота", q:"Как называется отрезок, соединяющий вершину треугольника с серединой противоположной стороны?", a:["медиана"]},
+      {q:"Медиана AM проведена к стороне BC = 18 см. Найдите BM и MC. Выберите ответ.", a:["9 9","9, 9","9; 9"]},
+      {q:"Биссектриса делит противоположную сторону пополам в любом треугольнике? Выберите ответ.", a:["нет"]},
+      {q:"В прямоугольном треугольнике острый угол равен 28°. Какие два возможных угла могут образоваться между высотой к гипотенузе и катетом? Выберите ответ.", a:["28 62","28, 62","62 28","28° 62°"]},
+      {section:"Часть 5. Прямоугольный треугольник", q:"Катеты прямоугольного треугольника равны 6 см и 8 см. Найдите гипотенузу. Выберите ответ.", a:["10"]},
+      {q:"Гипотенуза равна 13 см, один катет — 5 см. Найдите второй катет. Выберите ответ.", a:["12"]},
+      {q:"Гипотенуза прямоугольного треугольника равна 20 см. Найдите медиану, проведённую к гипотенузе. Выберите ответ.", a:["10"]},
+      {q:"В прямоугольном треугольнике один острый угол вдвое больше другого. Найдите острые углы. Выберите ответ.", a:["30 60","60 30","30, 60","60, 30"]},
+      {q:"Какое свойство имеет катет, лежащий против угла 30°?", a:["равен половине гипотенузы","катет равен половине гипотенузы","половина гипотенузы"]},
+      {section:"Часть 6. Подобие треугольников", q:"Стороны треугольников: 3, 4, 5 см и 6, 8, 10 см. Найдите коэффициент подобия от первого ко второму. Выберите ответ.", a:["2"]},
+      {q:"Коэффициент подобия равен 3. Периметр меньшего треугольника — 12 см. Найдите периметр большего. Выберите ответ.", a:["36"]},
+      {q:"Коэффициент подобия равен 2. Площадь меньшего треугольника — 15 см². Найдите площадь большего. Выберите ответ.", a:["60"]},
+      {q:"Какая тройка признаков подобия треугольников указана верно?", a:["по двум углам; по двум пропорциональным сторонам и углу между ними; по трём пропорциональным сторонам","по двум углам, по двум сторонам и углу между ними, по трём сторонам","два угла; две пропорциональные стороны и угол между ними; три пропорциональные стороны"]},
+      {section:"Часть 7. Площади и окружности", q:"Основание треугольника 12 см, высота 7 см. Найдите площадь. Выберите ответ.", a:["42"]},
+      {q:"Катеты прямоугольного треугольника равны 9 см и 12 см. Найдите площадь. Выберите ответ.", a:["54"]},
+      {q:"Найдите площадь треугольника со сторонами 13, 14 и 15 см по формуле Герона. Выберите ответ.", a:["84"]},
+      {q:"Как называется точка пересечения биссектрис треугольника?", a:["инцентр","центр вписанной окружности","инцентр, центр вписанной окружности"]},
+      {q:"Как называется точка пересечения серединных перпендикуляров к сторонам треугольника?", a:["центр описанной окружности"]},
+      {section:"Часть 8. Комбинированные задачи", q:"В равнобедренном треугольнике боковые стороны 13 см, основание 10 см. Найдите высоту к основанию. Выберите ответ.", a:["12"]},
+      {q:"В треугольнике ∠A = 50°, ∠B = 60°. Найдите внешний угол при C. Выберите ответ.", a:["110"]},
+      {q:"В треугольнике ABC AB = AC, а M — середина BC. Как расположена AM относительно BC? Выберите ответ.", a:["перпендикулярна","am перпендикулярна bc","перпендикулярна bc"]},
+      {q:"Высота 12 см делит треугольник на два прямоугольных треугольника с основаниями 5 см и 9 см. Найдите площадь исходного треугольника. Выберите ответ.", a:["84"]},
+      {q:"В треугольнике DE ∥ BC, AD = 4 см, DB = 6 см, AE = 5 см. Найдите EC. Выберите ответ.", a:["7.5","7,5"]}
+    ];
+
+    const triangleChoices = [
+  {
+    "options": [
+      "55",
+      "65",
+      "115",
+      "75"
+    ],
+    "correctIndex": 1,
+    "hint": "Вспомни, чему равна сумма внутренних углов треугольника."
+  },
+  {
+    "options": [
+      "40° и 40°",
+      "50° и 30°",
+      "100° и 40°",
+      "80° и 80°"
+    ],
+    "correctIndex": 0,
+    "hint": "В равнобедренном треугольнике равны углы при основании. Подумай, может ли угол 100° быть углом при основании."
+  },
+  {
+    "options": [
+      "35",
+      "70",
+      "110",
+      "145"
+    ],
+    "correctIndex": 2,
+    "hint": "Углы при основании равны; их сумму вычитают из суммы углов треугольника."
+  },
+  {
+    "options": [
+      "Да",
+      "Только если треугольник равнобедренный",
+      "Только если треугольник равносторонний",
+      "Нет"
+    ],
+    "correctIndex": 0,
+    "hint": "Проверь сумму трёх данных углов и условие существования треугольника."
+  },
+  {
+    "options": [
+      "Прямоугольный",
+      "Тупоугольный",
+      "Равносторонний",
+      "Остроугольный"
+    ],
+    "correctIndex": 0,
+    "hint": "Название по углам определяется сравнением наибольшего угла с прямым углом."
+  },
+  {
+    "options": [
+      "Да",
+      "Нет",
+      "Только если стороны равны",
+      "Только если угол между сторонами прямой"
+    ],
+    "correctIndex": 1,
+    "hint": "Сравни длину самой длинной стороны с суммой двух остальных."
+  },
+  {
+    "options": [
+      "Все целые числа от 5 до 17",
+      "Все целые числа от 4 до 17",
+      "Все целые числа от 5 до 18",
+      "Все целые числа от 4 до 18"
+    ],
+    "correctIndex": 0,
+    "hint": "Третья сторона строго больше разности двух сторон и строго меньше их суммы."
+  },
+  {
+    "options": [
+      "16",
+      "22",
+      "12",
+      "10"
+    ],
+    "correctIndex": 2,
+    "hint": "Из периметра вычти две равные боковые стороны."
+  },
+  {
+    "options": [
+      "15",
+      "7",
+      "5",
+      "9"
+    ],
+    "correctIndex": 1,
+    "hint": "Периметр — сумма всех трёх сторон."
+  },
+  {
+    "options": [
+      "Два угла; отношение сторон; равные площади",
+      "Три угла; две стороны и произвольный угол; периметр",
+      "Три угла; две стороны; одна сторона",
+      "Две стороны и угол между ними; сторона и два прилежащих угла; три стороны"
+    ],
+    "correctIndex": 3,
+    "hint": "Не путай равенство треугольников с подобием: нужны условия, определяющие и форму, и размеры."
+  },
+  {
+    "options": [
+      "По трём сторонам",
+      "По стороне и двум прилежащим углам",
+      "По трём углам",
+      "По двум сторонам и углу между ними"
+    ],
+    "correctIndex": 3,
+    "hint": "Определи, какие элементы известны и где расположен указанный угол относительно сторон."
+  },
+  {
+    "options": [
+      "Нет",
+      "Да",
+      "Только если треугольник прямоугольный",
+      "Только если все стороны равны"
+    ],
+    "correctIndex": 1,
+    "hint": "Вспомни симметрию равнобедренного треугольника относительно прямой через вершину и середину основания."
+  },
+  {
+    "options": [
+      "По трём сторонам",
+      "По стороне и двум прилежащим углам",
+      "По двум сторонам и углу между ними",
+      "По двум углам"
+    ],
+    "correctIndex": 2,
+    "hint": "Проверь, является ли угол B углом между указанными сторонами."
+  },
+  {
+    "options": [
+      "Медиана",
+      "Средняя линия",
+      "Высота",
+      "Биссектриса"
+    ],
+    "correctIndex": 0,
+    "hint": "Сосредоточься на условии «середина противоположной стороны»."
+  },
+  {
+    "options": [
+      "6 и 12",
+      "8 и 10",
+      "9 и 9",
+      "18 и 18"
+    ],
+    "correctIndex": 2,
+    "hint": "Медиана делит сторону, к которой проведена, на две равные части."
+  },
+  {
+    "options": [
+      "Только в прямоугольном треугольнике",
+      "Да",
+      "Только в тупоугольном треугольнике",
+      "Нет"
+    ],
+    "correctIndex": 3,
+    "hint": "Биссектриса делит угол, а медиана — сторону. Совпадают они не всегда."
+  },
+  {
+    "options": [
+      "28° и 28°",
+      "14° и 76°",
+      "28° и 62°",
+      "62° и 90°"
+    ],
+    "correctIndex": 2,
+    "hint": "Высота к гипотенузе образует два прямоугольных треугольника. Используй подобие и дополнение острых углов до 90°."
+  },
+  {
+    "options": [
+      "12",
+      "10",
+      "14",
+      "8"
+    ],
+    "correctIndex": 1,
+    "hint": "Примени теорему Пифагора к двум катетам."
+  },
+  {
+    "options": [
+      "8",
+      "18",
+      "10",
+      "12"
+    ],
+    "correctIndex": 3,
+    "hint": "По теореме Пифагора квадрат неизвестного катета равен разности квадратов гипотенузы и известного катета."
+  },
+  {
+    "options": [
+      "20",
+      "10",
+      "15",
+      "5"
+    ],
+    "correctIndex": 1,
+    "hint": "Вспомни свойство медианы, проведённой к гипотенузе."
+  },
+  {
+    "options": [
+      "40° и 50°",
+      "20° и 40°",
+      "30° и 60°",
+      "45° и 90°"
+    ],
+    "correctIndex": 2,
+    "hint": "Пусть меньший острый угол равен x, а больший — 2x. Их сумма составляет 90°."
+  },
+  {
+    "options": [
+      "Катет равен удвоенной гипотенузе",
+      "Катет равен второму катету",
+      "Катет равен половине гипотенузы",
+      "Катет равен гипотенузе"
+    ],
+    "correctIndex": 2,
+    "hint": "Представь прямоугольный треугольник с острыми углами 30° и 60° и вспомни соотношение его сторон."
+  },
+  {
+    "options": [
+      "0,5",
+      "3",
+      "2",
+      "4"
+    ],
+    "correctIndex": 2,
+    "hint": "Раздели длину соответствующей стороны второго треугольника на сторону первого."
+  },
+  {
+    "options": [
+      "15",
+      "36",
+      "48",
+      "24"
+    ],
+    "correctIndex": 1,
+    "hint": "У подобных треугольников периметры изменяются в том же отношении, что и стороны."
+  },
+  {
+    "options": [
+      "120",
+      "30",
+      "60",
+      "45"
+    ],
+    "correctIndex": 2,
+    "hint": "Площади подобных фигур меняются пропорционально квадрату коэффициента подобия."
+  },
+  {
+    "options": [
+      "По равным высотам; равным медианам; равным основаниям",
+      "По двум углам; двум пропорциональным сторонам и углу между ними; трём пропорциональным сторонам",
+      "По трём равным углам; двум равным сторонам; равным площадям",
+      "По равным периметрам; двум равным углам; одной равной стороне"
+    ],
+    "correctIndex": 1,
+    "hint": "Сходство формы характеризуют равенство соответствующих углов и пропорциональность сторон."
+  },
+  {
+    "options": [
+      "84",
+      "38",
+      "42",
+      "19"
+    ],
+    "correctIndex": 2,
+    "hint": "Площадь треугольника равна половине произведения основания на проведённую к нему высоту."
+  },
+  {
+    "options": [
+      "21",
+      "42",
+      "108",
+      "54"
+    ],
+    "correctIndex": 3,
+    "hint": "Катеты прямоугольного треугольника взаимно перпендикулярны и могут служить основанием и высотой."
+  },
+  {
+    "options": [
+      "96",
+      "168",
+      "84",
+      "42"
+    ],
+    "correctIndex": 2,
+    "hint": "Сначала найди полупериметр, затем подставь стороны в формулу Герона."
+  },
+  {
+    "options": [
+      "Ортоцентр",
+      "Центр описанной окружности",
+      "Центроид",
+      "Инцентр"
+    ],
+    "correctIndex": 3,
+    "hint": "Среди центров треугольника различай пересечения биссектрис, медиан и высот."
+  },
+  {
+    "options": [
+      "Точка пересечения высот",
+      "Центр описанной окружности",
+      "Точка пересечения медиан",
+      "Центр вписанной окружности"
+    ],
+    "correctIndex": 1,
+    "hint": "Серединные перпендикуляры состоят из точек, равноудалённых от концов соответствующей стороны."
+  },
+  {
+    "options": [
+      "10",
+      "12",
+      "8",
+      "5"
+    ],
+    "correctIndex": 1,
+    "hint": "Высота к основанию равнобедренного треугольника делит основание пополам. Затем используй теорему Пифагора."
+  },
+  {
+    "options": [
+      "70",
+      "110",
+      "120",
+      "60"
+    ],
+    "correctIndex": 1,
+    "hint": "Внешний угол равен сумме двух внутренних углов, не смежных с ним."
+  },
+  {
+    "options": [
+      "AM образует с BC угол 45°",
+      "AM совпадает с BC",
+      "AM перпендикулярна BC",
+      "AM параллельна BC"
+    ],
+    "correctIndex": 2,
+    "hint": "В равнобедренном треугольнике медиана к основанию обладает дополнительным свойством."
+  },
+  {
+    "options": [
+      "60",
+      "168",
+      "84",
+      "108"
+    ],
+    "correctIndex": 2,
+    "hint": "Сложи два отрезка основания, затем используй формулу площади через основание и высоту."
+  },
+  {
+    "options": [
+      "6",
+      "12,5",
+      "4",
+      "7,5"
+    ],
+    "correctIndex": 3,
+    "hint": "При параллельных DE и BC отрезки соответствующих сторон пропорциональны: сравни AD и DB с AE и EC."
+  }
+];
+
+    const triangleExplanations = [
+  "Сумма углов треугольника — 180°. Третий угол: 180° − 48° − 67° = 65°.",
+  "Угол 100° не может быть углом при основании: тогда два таких угла дали бы 200°. Значит, это вершина; оставшиеся углы равны и составляют (180° − 100°) / 2 = 40° каждый.",
+  "При основании два равных угла по 35°. Угол при вершине: 180° − 35° − 35° = 110°.",
+  "90° + 60° + 30° = 180°, значит, такой треугольник существует. Он прямоугольный, но не равнобедренный и не равносторонний.",
+  "Один угол равен ровно 90°, следовательно, треугольник прямоугольный. В остроугольном все углы меньше 90°, а в тупоугольном есть угол больше 90°.",
+  "Для существования треугольника сумма двух меньших сторон должна быть строго больше третьей. Здесь 3 + 5 = 8, а не больше 8: получится вырожденная фигура.",
+  "Для третьей стороны x выполняется |11 − 7| < x < 11 + 7, то есть 4 < x < 18. Поэтому целые значения от 5 до 17 включительно.",
+  "Периметр равен сумме сторон: 32 = 10 + 10 + a, поэтому a = 32 − 20 = 12 см.",
+  "Третья сторона равна периметру минус две известные: 27 − 8 − 12 = 7 см. Проверка: 7 + 8 > 12.",
+  "Три признака равенства: (1) две стороны и угол между ними; (2) сторона и два прилежащих угла; (3) три стороны. Совпадение только углов устанавливает подобие, но не равенство.",
+  "Даны две пары равных сторон AB = DE и AC = DF, а угол A = D заключён между ними. Это первый признак равенства треугольников.",
+  "В равнобедренном треугольнике медиана из вершины к основанию одновременно биссектриса и высота благодаря симметрии треугольника.",
+  "AB и BC образуют угол B, а A₁B₁ и B₁C₁ — угол B₁. Две стороны и угол между ними равны, поэтому применяем первый признак.",
+  "Медиана — отрезок из вершины к середине противоположной стороны. Высота перпендикулярна стороне, а биссектриса делит угол пополам.",
+  "Медиана делит сторону BC = 18 см пополам: BM = MC = 18 / 2 = 9 см.",
+  "В общем случае биссектриса делит противоположную сторону в отношении прилегающих сторон, а не обязательно пополам. Пополам её делит медиана.",
+  "Высота к гипотенузе делит прямой угол на части, равные двум острым углам исходного треугольника. Второй острый угол равен 90° − 28° = 62°, поэтому возможны 28° и 62°.",
+  "По теореме Пифагора c² = 6² + 8² = 36 + 64 = 100. Значит, c = 10 см.",
+  "По теореме Пифагора второй катет равен √(13² − 5²) = √(169 − 25) = √144 = 12 см.",
+  "Медиана прямоугольного треугольника к гипотенузе равна половине гипотенузы: 20 / 2 = 10 см.",
+  "Пусть меньший угол равен x, а больший 2x. Тогда x + 2x = 90°, x = 30°, второй угол 60°.",
+  "В прямоугольном треугольнике катет против угла 30° равен половине гипотенузы. Он не может быть равен самой гипотенузе, поскольку гипотенуза длиннее катета.",
+  "Соответствующие стороны увеличиваются в 2 раза: 6 / 3 = 8 / 4 = 10 / 5 = 2. Поэтому коэффициент от первого ко второму равен 2.",
+  "У подобных треугольников периметры относятся как соответствующие стороны: 12 × 3 = 36 см.",
+  "Площади подобных треугольников относятся как квадрат коэффициента: 15 × 2² = 15 × 4 = 60 см².",
+  "Три признака подобия: по двум углам; по двум пропорциональным сторонам и заключённому между ними равному углу; по трём пропорциональным сторонам.",
+  "Формула площади S = ah / 2. Подставляем 12 × 7 / 2 = 42 см².",
+  "У прямоугольного треугольника катеты взаимно перпендикулярны, поэтому S = 9 × 12 / 2 = 54 см².",
+  "Полупериметр p = (13 + 14 + 15) / 2 = 21. По Герону S = √(21 × 8 × 7 × 6) = √7056 = 84 см².",
+  "Биссектрисы пересекаются в инцентре — центре вписанной окружности. Медианы пересекаются в центроиде, высоты — в ортоцентре.",
+  "Серединные перпендикуляры пересекаются в центре описанной окружности: он одинаково удалён от всех трёх вершин.",
+  "Высота к основанию делит 10 см пополам: по 5 см. По Пифагору h = √(13² − 5²) = √144 = 12 см.",
+  "Внешний угол при C равен сумме двух внутренних несмежных углов: 50° + 60° = 110°.",
+  "AB = AC, поэтому ABC равнобедренный. Медиана AM к основанию BC одновременно является высотой: AM перпендикулярна BC.",
+  "Основание целиком равно 5 + 9 = 14 см. Площадь: S = 14 × 12 / 2 = 84 см².",
+  "Поскольку DE ∥ BC, треугольники ADE и ABC подобны. DB / AD = EC / AE, то есть 6 / 4 = EC / 5. Поэтому EC = 7,5 см."
+];
+
+    const triangleTheory = {
+      "Часть 1. Виды треугольников и углы": `<strong>Теория: виды треугольников и углы</strong>
+        <ul><li>Сумма внутренних углов любого треугольника равна 180°.</li>
+        <li>По углам: остроугольный — все углы меньше 90°; прямоугольный — один угол равен 90°; тупоугольный — один угол больше 90°.</li>
+        <li>По сторонам: равносторонний — все стороны равны; равнобедренный — две стороны равны; разносторонний — все стороны различны.</li>
+        <li>В равнобедренном треугольнике углы при основании равны. Чтобы найти угол, вычти известные углы из 180°.</li></ul>`,
+      "Часть 2. Существование треугольника": `<strong>Теория: существование треугольника</strong>
+        <ul><li>Треугольник существует, если сумма любых двух его сторон строго больше третьей стороны.</li>
+        <li>Если две стороны равны a и b, третья сторона x должна удовлетворять неравенству |a − b| &lt; x &lt; a + b.</li>
+        <li>Периметр P — сумма трёх сторон. В равнобедренном треугольнике две боковые стороны равны, поэтому основание равно P минус сумма боковых сторон.</li></ul>`,
+      "Часть 3. Равенство треугольников": `<strong>Теория: равенство треугольников</strong>
+        <ul><li>Треугольники равны, если их соответствующие стороны и углы совпадают.</li>
+        <li>Первый признак: по двум сторонам и углу между ними.</li>
+        <li>Второй признак: по стороне и двум прилежащим к ней углам.</li>
+        <li>Третий признак: по трём сторонам.</li></ul>`,
+      "Часть 4. Медиана, биссектриса и высота": `<strong>Теория: медиана, биссектриса и высота</strong>
+        <ul><li>Медиана соединяет вершину с серединой противоположной стороны и делит эту сторону на два равных отрезка.</li>
+        <li>Биссектриса делит угол пополам; сама по себе она не обязана делить противоположную сторону пополам.</li>
+        <li>Высота проводится из вершины перпендикулярно прямой, содержащей противоположную сторону.</li>
+        <li>В равнобедренном треугольнике медиана, проведённая к основанию, одновременно является высотой и биссектрисой.</li></ul>`,
+      "Часть 5. Прямоугольный треугольник": `<strong>Теория: прямоугольный треугольник</strong>
+        <ul><li>Катеты образуют прямой угол; сторона напротив него — гипотенуза.</li>
+        <li>Теорема Пифагора: a² + b² = c², где c — гипотенуза.</li>
+        <li>Сумма двух острых углов равна 90°. Если один угол вдвое больше другого, это углы 30° и 60°.</li>
+        <li>Медиана, проведённая к гипотенузе, равна половине гипотенузы. В прямоугольном треугольнике катет напротив угла 30° равен половине гипотенузы.</li></ul>`,
+      "Часть 6. Подобие треугольников": `<strong>Теория: подобие треугольников</strong>
+        <ul><li>У подобных треугольников соответствующие углы равны, а соответствующие стороны пропорциональны.</li>
+        <li>Признаки подобия: по двум углам; по двум пропорциональным сторонам и углу между ними; по трём пропорциональным сторонам.</li>
+        <li>Коэффициент подобия k показывает, во сколько раз изменяются соответствующие длины. Периметры относятся как k, площади — как k².</li></ul>`,
+      "Часть 7. Площади и окружности": `<strong>Теория: площади и окружности</strong>
+        <ul><li>Площадь треугольника: S = (основание × высота) / 2. Для прямоугольного треугольника S = ab / 2, где a и b — катеты.</li>
+        <li>Формула Герона: S = √(p(p − a)(p − b)(p − c)), где p = (a + b + c) / 2 — полупериметр.</li>
+        <li>Точка пересечения биссектрис — инцентр, центр вписанной окружности.</li>
+        <li>Точка пересечения серединных перпендикуляров к сторонам — центр описанной окружности; она равноудалена от всех вершин.</li></ul>`,
+      "Часть 8. Комбинированные задачи": `<strong>Теория: комбинированные задачи</strong>
+        <ul><li>В равнобедренном треугольнике высота к основанию делит основание пополам и образует два прямоугольных треугольника.</li>
+        <li>Внешний угол треугольника равен сумме двух внутренних углов, не смежных с ним.</li>
+        <li>В равнобедренном треугольнике медиана к основанию перпендикулярна основанию.</li>
+        <li>Если DE ∥ BC, то треугольники ADE и ABC подобны: AD/AB = AE/AC. Также можно использовать DB/AD = EC/AE.</li></ul>`
+    };
+
+    function normalizeTriangleAnswer(value) {
+      return value.toLowerCase().trim().replace(/°/g, "").replace(/см²|см2|см/g, "")
+        .replace(/\\s+/g, " ").replace(/,/g, ".").replace(/\\s*;\\s*/g, " ");
+    }
+    function renderTriangleQuestions() {
+      const container = document.getElementById("triangle-questions");
+      container.replaceChildren();
+      triangleQuestions.forEach((item, index) => {
+        const n = index + 1;
+        if (item.section) {
+          const section = document.createElement("h3");
+          section.style.marginTop = "24px";
+          section.textContent = item.section;
+          container.appendChild(section);
+          const theory = document.createElement("div");
+          theory.className = "triangle-theory";
+          theory.innerHTML = triangleTheory[item.section] || "";
+          container.appendChild(theory);
+        }
+        const wrap = document.createElement("div");
+        wrap.className = "triangle-question";
+        wrap.dataset.question = n;
+        const prompt = document.createElement("p");
+        prompt.textContent = `${n}. ${item.q}`;
+        wrap.appendChild(prompt);
+        triangleChoices[index].options.forEach((option, i) => {
+          const label = document.createElement("label");
+          label.className = "answer choice-option";
+          const radio = document.createElement("input");
+          radio.type = "radio";
+          radio.name = `triangle-answer-${n}`;
+          radio.value = String(i);
+          radio.className = "triangle-choice";
+          label.appendChild(radio);
+          label.appendChild(document.createTextNode(`${"АБВГ"[i]}. ${option}`));
+          wrap.appendChild(label);
+        });
+        container.appendChild(wrap);
+      });
+    }
+    // ВСТАВЬТЕ СВОЙ URL GOOGLE APPS SCRIPT (заканчивается на /exec).
+    // Он появится после публикации скрипта как Web App.
+    const RESULTS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxJKvtgMHwaZWHGfqBNlTD-oau89vbitESRqaZKgW47UJdWE6Dgyp2mNJ3fsGAyhxksqA/exec";
+    const TEST_TITLE = "Геометрия — Треугольники";
+    let currentSubmission = null;
+    let submissionTimer = null;
+    let submissionFinished = false;
+
+    function setSubmissionStatus(message, kind = "info") {
+      const el = document.getElementById("submission-status");
+      el.className = "submission-status " + kind;
+      el.textContent = message;
+    }
+
+    function evaluateTriangleAnswers() {
+      let correct = 0, answered = 0;
+      const details = triangleQuestions.map((item, index) => {
+        const n = index + 1;
+        const chosen = document.querySelector(`input[name="triangle-answer-${n}"]:checked`);
+        const choiceIndex = chosen ? Number(chosen.value) : -1;
+        const answer = choiceIndex >= 0 ? triangleChoices[index].options[choiceIndex] : "";
+        const isCorrect = choiceIndex === triangleChoices[index].correctIndex;
+        if (chosen) answered++;
+        if (isCorrect) correct++;
+        return { number: n, question: item.q, answer, correct: isCorrect, expected: triangleChoices[index].options[triangleChoices[index].correctIndex] };
+      });
+      return { correct, answered, details };
+    }
+
+    const topicNames = [
+      "Виды и углы", "Существование", "Равенство", "Медианы и высоты",
+      "Прямоугольный", "Подобие", "Площади и окружности", "Комбинированные"
+    ];
+    const topicRanges = [[0,5],[5,9],[9,13],[13,17],[17,22],[22,26],[26,31],[31,36]];
+
+    function showTriangleReview(details) {
+      const review = document.getElementById("triangle-review");
+      review.replaceChildren();
+      const title = document.createElement("h3");
+      title.textContent = "Подробный разбор всех 36 заданий";
+      review.appendChild(title);
+      const intro = document.createElement("p");
+      intro.textContent = "Зелёный — правильный ответ, светло-розовый — ошибка или пропуск. Под каждым заданием объяснение решения.";
+      review.appendChild(intro);
+      details.forEach((item,index) => {
+        const choice = triangleChoices[index];
+        const section = document.createElement("div");
+        section.className = "review-task " + (item.correct ? "is-correct" : "is-wrong");
+        const question = document.createElement("p");
+        question.textContent = `${item.number}. ${item.question}`;
+        section.appendChild(question);
+        const chosen = document.createElement("div");
+        chosen.className = "review-chosen";
+        chosen.textContent = item.correct ? "✓ Верно" : (item.answer ? "✗ Неверно" : "— Ответ пропущен");
+        section.appendChild(chosen);
+        choice.options.forEach((option,optionIndex) => {
+          const row = document.createElement("div");
+          row.className = "answer " + (optionIndex===choice.correctIndex ? "correct-answer" : (option===item.answer && !item.correct ? "wrong-answer" : "answer-not-chosen"));
+          const mark = optionIndex===choice.correctIndex ? "✓ " : (option===item.answer ? "✗ " : "");
+          row.textContent = `${mark}${"АБВГ"[optionIndex]}. ${option}`;
+          section.appendChild(row);
+        });
+        const explanation = document.createElement("div");
+        explanation.className = "review-explanation";
+        const bold = document.createElement("strong");
+        bold.textContent = item.correct ? "Почему ответ правильный: " : (item.answer ? "Почему выбранный ответ неверный: " : "Как решить пропущенное задание: ");
+        explanation.appendChild(bold);
+        const wrongText = !item.correct && item.answer
+          ? `Вариант «${item.answer}» не удовлетворяет условию задачи. `
+          : "";
+        explanation.appendChild(document.createTextNode(wrongText + triangleExplanations[index]));
+        section.appendChild(explanation);
+        review.appendChild(section);
+      });
+    }
+
+    function renderTriangleCharts(details) {
+      const box = document.getElementById("triangle-charts");
+      box.replaceChildren();
+      box.hidden = false;
+      const total=details.length, correct=details.filter(d=>d.correct).length;
+      const wrong=details.filter(d=>d.answer && !d.correct).length;
+      const skipped=total-correct-wrong;
+      const grid=document.createElement('div');
+      grid.className='chart-grid';
+      const pieCard=document.createElement('section');
+      pieCard.className='chart-card';
+      const pieTitle=document.createElement('h3');pieTitle.textContent='Результат по заданиям';pieCard.appendChild(pieTitle);
+      const pieWrap=document.createElement('div');pieWrap.className='donut-wrap';
+      const donut=document.createElement('div');donut.className='donut';
+      const a=100*correct/total,b=100*(correct+wrong)/total;
+      donut.style.background=`conic-gradient(#78c993 0% ${a}%, #efb2ca ${a}% ${b}%, #dce5f1 ${b}% 100%)`;
+      donut.setAttribute('role','img');donut.setAttribute('aria-label',`Верно ${correct}, ошибки ${wrong}, пропущено ${skipped}`);
+      const center=document.createElement('div');center.className='donut-center';
+      const large=document.createElement('b');large.textContent=Math.round(100*correct/total)+'%';
+      const small=document.createElement('small');small.textContent='правильно';center.append(large,small);donut.appendChild(center);
+      const legend=document.createElement('div');legend.className='chart-legend';
+      [["#78c993",`Верно: ${correct}`],["#efb2ca",`Неверно: ${wrong}`],["#dce5f1",`Пропущено: ${skipped}`]].forEach(([color,name])=>{
+        const line=document.createElement('div');const dot=document.createElement('span');dot.className='legend-dot';dot.style.background=color;
+        line.append(dot,document.createTextNode(name));legend.appendChild(line);
+      });
+      pieWrap.append(donut,legend);pieCard.appendChild(pieWrap);
+      const barCard=document.createElement('section');barCard.className='chart-card';
+      const barTitle=document.createElement('h3');barTitle.textContent='Результаты по темам';barCard.appendChild(barTitle);
+      const values=topicRanges.map(([a,b])=>{
+        const data=details.slice(a,b);const success=data.filter(d=>d.correct).length;
+        return {success,total:data.length,pct:100*success/data.length};
+      });
+      const svgNS='http://www.w3.org/2000/svg';
+      const svg=document.createElementNS(svgNS,'svg');svg.setAttribute('viewBox','0 0 760 320');svg.setAttribute('class','line-chart');
+      svg.setAttribute('role','img');svg.setAttribute('aria-label','Столбчатая диаграмма процента правильных ответов по восьми темам теста');
+      const addSvg=(tag,attrs,label)=>{const el=document.createElementNS(svgNS,tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));if(label!==undefined)el.textContent=label;svg.appendChild(el);return el;};
+      const left=50,right=730,top=27,bottom=254,slot=(right-left)/values.length,barWidth=47;
+      const y=p=>bottom-(bottom-top)*p/100;
+      [0,25,50,75,100].forEach(p=>{
+        addSvg('line',{x1:left,y1:y(p),x2:right,y2:y(p),stroke:'#e8edf5','stroke-width':1});
+        addSvg('text',{x:40,y:y(p)+4,'text-anchor':'end',fill:'#78869a','font-size':12},p+'%');
+      });
+      values.forEach((v,i)=>{
+        const mid=left+(i+0.5)*slot,barHeight=bottom-y(v.pct);
+        addSvg('rect',{x:mid-barWidth/2,y:y(v.pct),width:barWidth,height:Math.max(0,barHeight),rx:6,fill:v.pct<60?'#efb2ca':v.pct<70?'#e4c5dd':'#8ecfb0'});
+        addSvg('text',{x:mid,y:Math.max(17,y(v.pct)-9),'text-anchor':'middle',fill:'#35445c','font-size':12,'font-weight':700},Math.round(v.pct)+'%');
+        addSvg('text',{x:mid,y:277,'text-anchor':'middle',fill:'#6c7f98','font-size':12},'Тема '+(i+1));
+      });
+      barCard.appendChild(svg);
+      const note=document.createElement('div');note.className='chart-tip';note.textContent='Каждый столбец показывает долю правильных ответов по теме. Низкие розовые столбцы — темы, которые стоит повторить в первую очередь.';barCard.appendChild(note);
+      const legendTitle=document.createElement('div');legendTitle.className='chart-tip';legendTitle.textContent='Подробно по темам:';barCard.appendChild(legendTitle);
+      const topicList=document.createElement('div');topicList.className='topic-list';
+      values.forEach((v,i)=>{
+        const tr=document.createElement('div');tr.className='topic-row'+(v.pct<60?' low':'');
+        const label=document.createElement('span');label.textContent=`${i+1}. ${topicNames[i]}`;
+        const score=document.createElement('span');score.textContent=`${v.success} из ${v.total} (${Math.round(v.pct)}%)`;
+        tr.append(label,score);topicList.appendChild(tr);
+      });
+      barCard.appendChild(topicList);grid.append(pieCard,barCard);box.appendChild(grid);
+      const candidates=values.map((v,i)=>({name:topicNames[i],...v})).filter(v=>v.pct<70).sort((a,b)=>a.pct-b.pct);
+      const recommend=document.createElement('p');recommend.className='chart-tip';
+      recommend.textContent=candidates.length ? 'Рекомендуется повторить: '+candidates.map(v=>v.name).join(', ')+'.' : 'Отличный результат: по всем темам не менее 70% правильных ответов.';
+      box.appendChild(recommend);
+    }
+
+    function toggleTriangleReview() {
+      const review=document.getElementById("triangle-review");
+      const button=document.getElementById("review-toggle");
+      const opening=review.hidden;
+      review.hidden=!opening;
+      button.textContent=opening ? "Скрыть подробный разбор" : "Посмотреть подробный разбор";
+      if(opening) review.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+
+    function highlightTriangleChoices(details) {
+      details.forEach((item, index) => {
+        const labels = document.querySelectorAll(`.triangle-question[data-question="${index+1}"] .choice-option`);
+        labels.forEach((label, i) => {
+          label.classList.remove("correct-answer", "wrong-answer");
+          if (i === triangleChoices[index].correctIndex) label.classList.add("correct-answer");
+          else if (label.querySelector('input').checked) label.classList.add("wrong-answer");
+        });
+      });
+    }
+
+    function lockTriangleInputs(locked) {
+      document.getElementById("student-name").disabled = locked;
+      document.querySelectorAll(".triangle-choice").forEach(input => input.disabled = locked);
+    }
+
+    function sendCurrentSubmission() {
+      if (!currentSubmission) return;
+      const sendButton = document.getElementById("submit-triangle-button");
+      const retryButton = document.getElementById("retry-triangle-button");
+      retryButton.style.display = "none";
+      sendButton.disabled = true;
+      setSubmissionStatus("Отправляем результаты в Google Таблицу…", "info");
+      const form = document.getElementById("submission-form");
+      form.action = RESULTS_ENDPOINT;
+      document.getElementById("submission-payload").value = JSON.stringify(currentSubmission);
+      clearTimeout(submissionTimer);
+      submissionTimer = setTimeout(() => {
+        setSubmissionStatus("Нет подтверждения от Google Таблицы. Возможно, запись уже сделана. Проверьте таблицу и при необходимости нажмите «Повторить отправку» — дубликат по номеру попытки не создастся.", "error");
+        retryButton.style.display = "inline-block";
+      }, 18000);
+      try { form.submit(); }
+      catch (err) {
+        clearTimeout(submissionTimer);
+        setSubmissionStatus("Не удалось отправить данные. Проверьте подключение и настройки веб-приложения.", "error");
+        retryButton.style.display = "inline-block";
+      }
+    }
+
+    function submitTriangleTest() {
+      if (submissionFinished || currentSubmission) return;
+      if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(RESULTS_ENDPOINT)) {
+        setSubmissionStatus("Сайт ещё не подключён к Google Таблице. Преподавателю нужно вставить адрес веб-приложения Apps Script в RESULTS_ENDPOINT согласно инструкции.", "error");
+        return;
+      }
+      const name = document.getElementById("student-name").value.trim().replace(/\s+/g, " ");
+      if (!name) {
+        setSubmissionStatus("Укажите имя и фамилию ученика перед отправкой.", "error");
+        document.getElementById("student-name").focus();
+        return;
+      }
+      const result = evaluateTriangleAnswers();
+      const omitted = triangleQuestions.length - result.answered;
+      if (omitted && !window.confirm(`Не заполнено заданий: ${omitted}. Отправить попытку с пропусками?`)) return;
+      // Один идентификатор на попытку — повторы после сбоя не создают дублей.
+      const attemptId = (window.crypto && window.crypto.randomUUID) ? window.crypto.randomUUID() :
+        "attempt-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+      currentSubmission = {
+        attemptId, studentName: name, testTitle: TEST_TITLE,
+        submittedAt: new Date().toISOString(), total: triangleQuestions.length,
+        answered: result.answered, correct: result.correct, details: result.details
+      };
+      lockTriangleInputs(true);
+      highlightTriangleChoices(result.details);
+      showTriangleReview(result.details);
+      renderTriangleCharts(result.details);
+      const reviewButton = document.getElementById("review-toggle");
+      reviewButton.style.display = "inline-block";
+      document.getElementById("triangle-review").hidden = true;
+      const resultNode = document.getElementById("triangle-result");
+      resultNode.style.display = "block";
+      resultNode.textContent = `Правильных ответов: ${result.correct} из ${triangleQuestions.length}. Заполнено: ${result.answered} из ${triangleQuestions.length}. Ошибок и пропусков: ${triangleQuestions.length - result.correct}.`;
+      sendCurrentSubmission();
+    }
+
+    function retryTriangleTest() {
+      if (currentSubmission && !submissionFinished) sendCurrentSubmission();
+    }
+
+    // Ответ приходит из небольшого HTML-документа Apps Script в скрытом iframe.
+    window.addEventListener("message", (event) => {
+      if (!currentSubmission || submissionFinished || !event.data || event.data.type !== "TRIANGLE_TEST_SAVED") return;
+      let hostname = "";
+      try { hostname = new URL(event.origin).hostname; } catch (err) { return; }
+      if (!(hostname === "script.google.com" || hostname.endsWith(".googleusercontent.com"))) return;
+      if (event.data.attemptId !== currentSubmission.attemptId) return;
+      clearTimeout(submissionTimer);
+      if (event.data.ok) {
+        submissionFinished = true;
+        setSubmissionStatus("Результаты успешно сохранены в Google Таблице. Спасибо!", "success");
+        document.getElementById("retry-triangle-button").style.display = "none";
+      } else {
+        setSubmissionStatus("Google Таблица не подтвердила сохранение: " + (event.data.error || "ошибка обработки") + ". Попробуйте повторную отправку или обратитесь к преподавателю.", "error");
+        document.getElementById("retry-triangle-button").style.display = "inline-block";
+      }
+    });
+
+    function resetTriangleAnswers() {
+      if (currentSubmission && !submissionFinished &&
+          !window.confirm("Попытка ещё не подтверждена Google Таблицей. Начать новую и потерять возможность повторно отправить текущую?")) return;
+      clearTimeout(submissionTimer);
+      currentSubmission = null;
+      submissionFinished = false;
+      lockTriangleInputs(false);
+      document.querySelectorAll(".triangle-choice").forEach(input => { input.checked = false; });
+      document.querySelectorAll(".choice-option").forEach(label => label.classList.remove("correct-answer", "wrong-answer"));
+      document.getElementById("triangle-charts").replaceChildren();
+      document.getElementById("triangle-charts").hidden = true;
+      document.getElementById("triangle-review").replaceChildren();
+      document.getElementById("triangle-review").hidden = true;
+      const reviewButton = document.getElementById("review-toggle");
+      reviewButton.style.display = "none";
+      reviewButton.textContent = "Посмотреть подробный разбор";
+      document.getElementById("student-name").value = "";
+      document.getElementById("submit-triangle-button").disabled = false;
+      document.getElementById("retry-triangle-button").style.display = "none";
+      document.getElementById("submission-status").className = "submission-status";
+      document.getElementById("submission-status").textContent = "";
+      const result = document.getElementById("triangle-result");
+      result.style.display = "none";
+      result.textContent = "";
+    }
+
+const trigSections = [{"name": "Часть 1. Тригонометрическая окружность и знаки", "theory": "<strong>Теория: единичная окружность</strong><ul><li>Точке угла α соответствует координата (cos α; sin α): косинус — горизонтальная координата x, синус — вертикальная y.</li><li>Положительное направление отсчёта — против часовой стрелки, полный оборот — 2π (360°).</li><li>По четвертям: I (+,+), II (−,+), III (−,−), IV (+,−) для (cos α, sin α).</li><li>Основные значения: sin 0=0, cos 0=1; sin(π/2)=1; cos π=−1; sin(3π/2)=−1.</li></ul>"}, {"name": "Часть 2. Одинаковые синусы и косинусы", "theory": "<strong>Теория: равные значения на окружности</strong><ul><li>Одинаковый синус означает одинаковую координату y: соответствующие точки лежат на одной горизонтальной прямой.</li><li>sin x = sin a ⇔ x = a + 2πn или x = π − a + 2πn, n ∈ ℤ.</li><li>Одинаковый косинус означает одинаковую координату x: точки симметричны относительно горизонтальной оси.</li><li>cos x = cos a ⇔ x = ±a + 2πn, n ∈ ℤ.</li></ul>"}, {"name": "Часть 3. Тригонометрические выражения", "theory": "<strong>Теория: основные формулы</strong><ul><li>Основное тождество: sin²x + cos²x = 1.</li><li>tg x = sin x / cos x (при cos x ≠ 0); ctg x = cos x / sin x (при sin x ≠ 0).</li><li>Формулы двойного угла: sin 2x = 2 sin x cos x, cos 2x = 1 − 2sin²x = 2cos²x − 1.</li><li>Чётность и периодичность: sin(−x)=−sin x, cos(−x)=cos x; sin(x+2π)=sin x, cos(x+2π)=cos x.</li></ul>"}, {"name": "Часть 4. Простейшие тригонометрические уравнения", "theory": "<strong>Теория: как выглядят семейства корней</strong><ul><li>sin x = a (|a| ≤ 1): x = (−1)ⁿ arcsin a + πn, n ∈ ℤ (или двумя сериями).</li><li>cos x = a (|a| ≤ 1): x = ± arccos a + 2πn, n ∈ ℤ.</li><li>tg x = a: x = arctg a + πn, n ∈ ℤ.</li><li>Если |a| &gt; 1, у sin x = a или cos x = a нет действительных корней. «n ∈ ℤ» означает любое целое число.</li></ul>"}, {"name": "Часть 5. Преобразование и решение уравнений", "theory": "<strong>Теория: преобразования и замена</strong><ul><li>Перенеси все слагаемые в одну сторону, используй тождества и вынеси общий множитель.</li><li>Если произведение равно нулю, приравняй к нулю каждый множитель.</li><li>Если встретилось cos 2x, используй cos 2x = 2cos²x − 1 или cos 2x = 1 − 2sin²x.</li><li>Если появляется t = sin x или t = cos x, сначала реши алгебраическое уравнение и проверь, что |t| ≤ 1.</li></ul>"}, {"name": "Часть 6. Корни на отрезке и запись ответа ЕГЭ", "theory": "<strong>Теория: отбор корней</strong><ul><li>Вначале найди ОБЩЕЕ решение, затем подбери целые n для указанного отрезка.</li><li>Чтобы отобрать x = a + Tn на [L;R], реши двойное неравенство L ≤ a + Tn ≤ R и выпиши подходящие целые n.</li><li>На тригонометрической окружности каждое семейство периодически повторяется через 2π (для tg — через π).</li><li>В ответе для части «б» перечисляй только корни внутри отрезка, включая обе границы.</li></ul>"}];
+const trigQuestions = [{"section": 0, "q": "Чему равны координаты точки на единичной окружности при угле π/2?", "options": ["(0; 1)", "(1; 0)", "(0; −1)", "(−1; 0)"], "correctIndex": 0, "explanation": "При π/2 луч направлен вверх, поэтому cos(π/2)=0 и sin(π/2)=1.", "figure": "unit"}, {"section": 0, "q": "В какой четверти sin α > 0, а cos α < 0?", "options": ["I", "II", "III", "IV"], "correctIndex": 1, "explanation": "Положительный sin — верхняя полуплоскость, отрицательный cos — левая. Их пересечение — II четверть.", "figure": "unit"}, {"section": 0, "q": "Чему равен sin(3π/2)?", "options": ["−1", "0", "1", "1/2"], "correctIndex": 0, "explanation": "Угол 3π/2 соответствует нижней точке окружности (0; −1); синус — y-координата.", "figure": "unit"}, {"section": 0, "q": "Чему равен cos π?", "options": ["0", "1", "−1", "−1/2"], "correctIndex": 2, "explanation": "Угол π соответствует левой точке окружности (−1; 0); косинус — x-координата.", "figure": "unit"}, {"section": 0, "q": "Какой угол соответствует повороту на 150°?", "options": ["π/3", "5π/6", "3π/4", "7π/6"], "correctIndex": 1, "explanation": "Для перевода в радианы умножаем 150° на π/180°: получается 5π/6.", "figure": "unit"}, {"section": 1, "q": "На окружности показаны две точки с одинаковой высотой. Какая функция имеет в них одинаковое значение?", "options": ["cos", "tg", "sin", "ctg"], "correctIndex": 2, "explanation": "Синус равен вертикальной координате y; одинаковая высота означает равные синусы.", "figure": "sin"}, {"section": 1, "q": "Если sin x = sin(π/6), какой угол, кроме π/6, подходит на [0; 2π)?", "options": ["5π/6", "7π/6", "11π/6", "π/3"], "correctIndex": 0, "explanation": "Второй угол с тем же синусом симметричен относительно вертикальной оси: π−π/6=5π/6.", "figure": "sin"}, {"section": 1, "q": "Какова общая запись решения sin x = sin a?", "options": ["x = ±a + 2πn", "x = a + πn", "x = a + 2πn или x = π−a + 2πn", "x = π/2 + πn"], "correctIndex": 2, "explanation": "Точки с одинаковой высотой дают две серии: a + 2πn и π−a + 2πn; n — любое целое.", "figure": "sin"}, {"section": 1, "q": "Какие углы имеют одинаковый косинус, если один угол равен π/4?", "options": ["π/4 и 7π/4", "π/4 и 3π/4", "π/4 и 5π/4", "π/4 и π/2"], "correctIndex": 0, "explanation": "Косинус — x-координата, одинаковая у углов a и 2π−a: π/4 и 7π/4.", "figure": "cos"}, {"section": 1, "q": "Как выглядит общее решение cos x = cos a?", "options": ["x = a + πn", "x = ±a + 2πn", "x = π−a + 2πn", "x = a/2 + πn"], "correctIndex": 1, "explanation": "При одинаковом косинусе точки симметричны относительно горизонтальной оси: x=±a+2πn.", "figure": "cos"}, {"section": 2, "q": "Упростите sin²x + cos²x.", "options": ["0", "sin 2x", "1", "2"], "correctIndex": 2, "explanation": "По основному тригонометрическому тождеству sin²x + cos²x = 1.", "figure": ""}, {"section": 2, "q": "Если sin x = 3/5, а x — угол I четверти, чему равен cos x?", "options": ["−4/5", "3/5", "4/5", "5/4"], "correctIndex": 2, "explanation": "cos²x=1−9/25=16/25, значит cos x=±4/5. В I четверти косинус положительный: 4/5.", "figure": ""}, {"section": 2, "q": "Чему равно 2sin x cos x?", "options": ["cos 2x", "sin 2x", "1−cos 2x", "sin²x"], "correctIndex": 1, "explanation": "Это формула двойного угла: sin 2x=2 sin x cos x.", "figure": ""}, {"section": 2, "q": "Упростите 1 − 2sin²x.", "options": ["cos 2x", "sin 2x", "−cos x", "2cos x"], "correctIndex": 0, "explanation": "Формула косинуса двойного угла: cos 2x=1−2sin²x.", "figure": ""}, {"section": 2, "q": "Вычислите sin(−π/6).", "options": ["1/2", "−1/2", "√3/2", "−√3/2"], "correctIndex": 1, "explanation": "Синус — нечётная функция: sin(−x)=−sin x; sin π/6=1/2.", "figure": ""}, {"section": 3, "q": "Решите sin x = 0 (n ∈ ℤ).", "options": ["x = π/2 + πn", "x = 2πn", "x = πn", "x = π/4 + πn"], "correctIndex": 2, "explanation": "Нули синуса находятся на горизонтальной оси через каждые π радиан: x=πn.", "figure": "unit"}, {"section": 3, "q": "Решите cos x = 1/2 (n ∈ ℤ).", "options": ["x = ±π/3 + 2πn", "x = π/3 + πn", "x = ±π/6 + 2πn", "x = π/2 + πn"], "correctIndex": 0, "explanation": "Косинус равен 1/2 при углах π/3 и −π/3, затем повторяется через 2π.", "figure": "cos"}, {"section": 3, "q": "Решите sin x = 1/2 (n ∈ ℤ).", "options": ["x = ±π/6 + 2πn", "x = π/6 + 2πn или x = 5π/6 + 2πn", "x = π/6 + πn", "x = π/3 + 2πn"], "correctIndex": 1, "explanation": "Положительный синус 1/2 в I и II четвертях: π/6 и 5π/6, повторяем через 2π.", "figure": "sin"}, {"section": 3, "q": "Решите tg x = 1 (n ∈ ℤ).", "options": ["x = π/4 + πn", "x = π/4 + 2πn", "x = π/2 + πn", "x = ±π/4 + 2πn"], "correctIndex": 0, "explanation": "Тангенс равен 1 при π/4 и имеет период π.", "figure": ""}, {"section": 3, "q": "Сколько действительных решений у cos x = 3?", "options": ["Одно", "Два", "Бесконечно много", "Ни одного"], "correctIndex": 3, "explanation": "Для любого действительного x выполняется −1≤cos x≤1; число 3 вне диапазона.", "figure": ""}, {"section": 4, "q": "Решите 2sin x − 1 = 0 (n ∈ ℤ).", "options": ["x = π/6 + 2πn или 5π/6 + 2πn", "x = ±π/6 + 2πn", "x = π/2 + πn", "x = π/3 + πn"], "correctIndex": 0, "explanation": "Переносим 1 и делим на 2: sin x=1/2. Отсюда две серии углов π/6 и 5π/6.", "figure": "sin"}, {"section": 4, "q": "Решите 2cos²x − 1 = 0 (n ∈ ℤ).", "options": ["x = π/2 + πn", "x = π/4 + (π/2)n", "x = ±π/2 + 2πn", "x = π/4 + πn"], "correctIndex": 1, "explanation": "cos²x=1/2, значит cos x=±√2/2. Все решения перечисляются шагом π/2 от π/4.", "figure": "unit"}, {"section": 4, "q": "Решите sin x · (2cos x − 1) = 0 (n ∈ ℤ).", "options": ["Только x = πn", "Только x = ±π/3 + 2πn", "x = πn или x = ±π/3 + 2πn", "x = π/2 + πn"], "correctIndex": 2, "explanation": "Произведение равно нулю, если sin x=0 (x=πn) либо cos x=1/2 (x=±π/3+2πn).", "figure": ""}, {"section": 4, "q": "Решите cos 2x = 1 (n ∈ ℤ).", "options": ["x = 2πn", "x = π/2 + πn", "x = πn", "x = π/4 + πn"], "correctIndex": 2, "explanation": "cos t=1 при t=2πn. Тогда 2x=2πn, откуда x=πn.", "figure": ""}, {"section": 4, "q": "Решите sin²x = 1 (n ∈ ℤ).", "options": ["x = πn", "x = π/2 + πn", "x = π/4 + πn", "x = 2πn"], "correctIndex": 1, "explanation": "sin x=±1 в верхней и нижней точках окружности; это x=π/2+πn.", "figure": "unit"}, {"section": 5, "q": "Какие корни у sin x = 0 лежат на [0; 2π]?", "options": ["0 и π", "π и 2π", "0, π, 2π", "π/2 и 3π/2"], "correctIndex": 2, "explanation": "Общее решение x=πn. При 0≤πn≤2π подходят n=0,1,2, включая концы отрезка.", "figure": "unit"}, {"section": 5, "q": "Какие корни cos x = 0 принадлежат [0; 2π)?", "options": ["0 и π", "π/2 и 3π/2", "π/2 и 2π", "π и 3π/2"], "correctIndex": 1, "explanation": "cos x=0 на вертикальной оси при π/2 и 3π/2; правая граница 2π исключена.", "figure": "unit"}, {"section": 5, "q": "Какой корень sin x = 1/2 принадлежит [π/2; π]?", "options": ["π/6", "5π/6", "7π/6", "11π/6"], "correctIndex": 1, "explanation": "Синус 1/2 при π/6 и 5π/6 в одном обороте, но в [π/2;π] находится только 5π/6.", "figure": "sin"}, {"section": 5, "q": "Какие корни tg x = 1 принадлежат [0; 2π)?", "options": ["π/4 и 5π/4", "π/4 и 7π/4", "π/4 и 3π/4", "π/4"], "correctIndex": 0, "explanation": "Общее решение π/4+πn. При n=0,1 получаем π/4 и 5π/4.", "figure": ""}, {"section": 5, "q": "Решите cos 2x − 2cos x + 1 = 0 (n ∈ ℤ).", "options": ["x = πn", "x = π/2 + πn или x = 2πn", "x = ±π/3 + 2πn", "x = 2πn"], "correctIndex": 1, "explanation": "Подставляем cos 2x=2cos²x−1: получаем 2cos x(cos x−1)=0. Поэтому cos x=0 (x=π/2+πn) или cos x=1 (x=2πn).", "figure": "unit"}];
+
+let trigSubmission = null, trigSaved = false, trigTimer = null;
+const TRIG_TEST_TITLE = 'Математика — Тригонометрия ЕГЭ';
+const trigSectionNames = ['Окружность и знаки','Равные синусы и косинусы','Выражения','Простейшие уравнения','Преобразование уравнений','Отбор корней'];
+const TRIG_SVG_NS = 'http://www.w3.org/2000/svg';
+function createTrigCircle(kind){
+ const box=document.createElement('div');box.className='trig-picture';
+ const svg=document.createElementNS(TRIG_SVG_NS,'svg');svg.setAttribute('viewBox','0 0 430 270');svg.setAttribute('role','img');
+ svg.setAttribute('aria-label',kind==='sin'?'Две точки с одинаковым синусом — одна горизонтальная координата':kind==='cos'?'Две точки с одинаковым косинусом — одна вертикальная прямая':'Единичная окружность с координатными осями и ключевыми углами');
+ const add=(tag,attrs,txt)=>{const e=document.createElementNS(TRIG_SVG_NS,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,String(v)));if(txt!==undefined)e.textContent=txt;svg.appendChild(e);return e;};
+ const cx=200,cy=134,r=103;
+ add('line',{x1:cx-r-30,y1:cy,x2:cx+r+35,y2:cy,stroke:'#8ea4bc','stroke-width':1.5});
+ add('line',{x1:cx,y1:cy+r+17,x2:cx,y2:cy-r-17,stroke:'#8ea4bc','stroke-width':1.5});
+ add('circle',{cx,cy,r,fill:'white',stroke:'#6aaed6','stroke-width':3});
+ add('text',{x:cx+r+22,y:cy-6,fill:'#47617c','font-size':14},'x = cos α');
+ add('text',{x:cx+10,y:cy-r-15,fill:'#47617c','font-size':14},'y = sin α');
+ add('text',{x:cx+5,y:cy+18,fill:'#677d98','font-size':12},'0');
+ if(kind==='sin'){
+   const a=Math.PI/6,points=[a,Math.PI-a];const y=cy-r*Math.sin(a);
+   add('line',{x1:cx-r,y1:y,x2:cx+r,y2:y,stroke:'#e394b7','stroke-dasharray':'6,4','stroke-width':2});
+   points.forEach((ang,i)=>{const x=cx+r*Math.cos(ang);add('line',{x1:cx,y1:cy,x2:x,y2:y,stroke:'#92c0dd','stroke-width':2});add('circle',{cx:x,cy:y,r:6,fill:'#da87af'});add('text',{x:x+(i? -26:8),y:y-12,fill:'#9e4777','font-size':13},i?'π−α':'α');});
+   add('text',{x:15,y:252,fill:'#6d7991','font-size':13},'Одна высота → одинаковый sin');
+ } else if(kind==='cos'){
+   const a=Math.PI/4, x=cx+r*Math.cos(a),y1=cy-r*Math.sin(a),y2=cy+r*Math.sin(a);
+   add('line',{x1:x,y1:cy-r,x2:x,y2:cy+r,stroke:'#e394b7','stroke-dasharray':'6,4','stroke-width':2});
+   [y1,y2].forEach((y,i)=>{add('line',{x1:cx,y1:cy,x2:x,y2:y,stroke:'#92c0dd','stroke-width':2});add('circle',{cx:x,cy:y,r:6,fill:'#da87af'});add('text',{x:x+9,y:y-3,fill:'#9e4777','font-size':13},i?'−α':'α');});
+   add('text',{x:15,y:252,fill:'#6d7991','font-size':13},'Одна абсцисса → одинаковый cos');
+ } else {
+   [[0,'0'],[Math.PI/2,'π/2'],[Math.PI,'π'],[3*Math.PI/2,'3π/2']].forEach(([a,t])=>{
+     const x=cx+r*Math.cos(a),y=cy-r*Math.sin(a);add('circle',{cx:x,cy:y,r:4,fill:'#df8bb4'});
+     add('text',{x:x+(a===Math.PI? -19:8),y:y+(a===Math.PI/2?-9: a===3*Math.PI/2?20: -7),fill:'#4e6680','font-size':13},t);
+   });
+ }
+ box.appendChild(svg);return box;
+}
+function renderTrigTest(){
+ const root=document.getElementById('trig-questions');root.replaceChildren();
+ trigQuestions.forEach((q,i)=>{
+  if(i%5===0){const h=document.createElement('h3');h.textContent=trigSections[q.section].name;h.style.marginTop='28px';root.append(h);
+   const theory=document.createElement('div');theory.className='triangle-theory';theory.innerHTML=trigSections[q.section].theory;root.append(theory);
+   if(q.section===1){const caption=document.createElement('p');caption.className='trig-muted';caption.textContent='Рисунок: точки одного уровня имеют одинаковый синус. В вопросах также есть рисунки с одинаковыми косинусами.';root.append(caption);root.append(createTrigCircle('sin'));}
+  }
+  const node=document.createElement('div');node.className='trig-question';node.dataset.idx=i;
+  const stem=document.createElement('p');stem.textContent=(i+1)+'. '+q.q;node.append(stem);
+  if(q.figure && (i===0 || i===5 || i===8 || i===15 || i===25)) node.append(createTrigCircle(q.figure));
+  q.options.forEach((answer,j)=>{const label=document.createElement('label');label.className='answer choice-option';
+   const radio=document.createElement('input');radio.type='radio';radio.name='trig-answer-'+i;radio.value=String(j);radio.className='trig-choice';
+   label.append(radio,document.createTextNode('АБВГ'[j]+'. '+answer));node.append(label);
+  });root.append(node);
+ });
+}
+function getTrigDetails(){return trigQuestions.map((q,i)=>{const selected=document.querySelector('input[name="trig-answer-'+i+'"]:checked');const answerIdx=selected?Number(selected.value):-1;return {number:i+1,question:q.q,answer:answerIdx>=0?q.options[answerIdx]:'',expected:q.options[q.correctIndex],correct:answerIdx===q.correctIndex,topic:trigSectionNames[q.section]};});}
+function setTrigStatus(msg,style='info'){const s=document.getElementById('trig-status');s.className='submission-status '+style;s.textContent=msg;}
+function showTrigDetails(details){
+ const root=document.getElementById('trig-review');root.replaceChildren();
+ const h=document.createElement('h3');h.textContent='Объяснения ко всем 30 заданиям';root.append(h);
+ details.forEach((d,i)=>{
+   const q=trigQuestions[i],node=document.createElement('div');node.className='review-task '+(d.correct?'is-correct':'is-wrong');
+   const p=document.createElement('p');p.textContent=(i+1)+'. '+q.q;node.append(p);
+   const verdict=document.createElement('div');verdict.className='review-chosen';verdict.textContent=d.correct?'✓ Верно':d.answer?'✗ Неверно':'— Пропущено';node.append(verdict);
+   if(q.figure && [0,5,8,15,25].includes(i))node.append(createTrigCircle(q.figure));
+   q.options.forEach((o,j)=>{const row=document.createElement('div');row.className='answer '+(j===q.correctIndex?'correct-answer':o===d.answer&&!d.correct?'wrong-answer':'answer-not-chosen');row.textContent=(j===q.correctIndex?'✓ ':o===d.answer?'✗ ':'')+'АБВГ'[j]+'. '+o;node.append(row);});
+   const ex=document.createElement('div');ex.className='review-explanation';
+   const b=document.createElement('strong');b.textContent='Разбор решения: ';ex.append(b,document.createTextNode(q.explanation));node.append(ex);root.append(node);
+ });
+}
+function showTrigCharts(details){
+ const box=document.getElementById('trig-charts');box.replaceChildren();box.hidden=false;
+ const correct=details.filter(x=>x.correct).length,wrong=details.filter(x=>x.answer&&!x.correct).length,skipped=details.length-correct-wrong;
+ const grid=document.createElement('div');grid.className='chart-grid';
+ const pie=document.createElement('section');pie.className='chart-card';pie.innerHTML='<h3>Итоги теста</h3>';
+ const pieWrap=document.createElement('div');pieWrap.className='donut-wrap';
+ const donut=document.createElement('div');donut.className='donut';donut.style.background=`conic-gradient(#78c993 0 ${100*correct/30}%,#efb2ca ${100*correct/30}% ${100*(correct+wrong)/30}%,#dce5f1 ${100*(correct+wrong)/30}% 100%)`;
+ const center=document.createElement('div');center.className='donut-center';center.innerHTML='<b>'+Math.round(100*correct/30)+'%</b><small>правильно</small>';donut.append(center);
+ const leg=document.createElement('div');leg.className='chart-legend';[[correct,'Верно','#78c993'],[wrong,'Ошибки','#efb2ca'],[skipped,'Пропущено','#dce5f1']].forEach(([num,txt,color])=>{const line=document.createElement('div');const dot=document.createElement('span');dot.className='legend-dot';dot.style.background=color;line.append(dot,document.createTextNode(txt+': '+num));leg.append(line);});pieWrap.append(donut,leg);pie.append(pieWrap);
+ const bar=document.createElement('section');bar.className='chart-card';bar.innerHTML='<h3>Какие темы повторить</h3>';
+ const vals=trigSectionNames.map((name,i)=>({name,correct:details.slice(i*5,i*5+5).filter(d=>d.correct).length}));
+ const svg=document.createElementNS(TRIG_SVG_NS,'svg');svg.setAttribute('class','line-chart');svg.setAttribute('viewBox','0 0 740 310');svg.setAttribute('aria-label','Столбчатая диаграмма по шести разделам тригонометрии');svg.setAttribute('role','img');
+ const add=(tag,attrs,label)=>{const n=document.createElementNS(TRIG_SVG_NS,tag);Object.entries(attrs).forEach(([k,v])=>n.setAttribute(k,String(v)));if(label!==undefined)n.textContent=label;svg.append(n);};
+ const top=30,bottom=252,left=52,right=724,y=p=>bottom-(bottom-top)*p/100;
+ [0,25,50,75,100].forEach(p=>{add('line',{x1:left,y1:y(p),x2:right,y2:y(p),stroke:'#e8edf5'});add('text',{x:left-10,y:y(p)+4,'text-anchor':'end',fill:'#74869a','font-size':12},p+'%');});
+ vals.forEach((v,i)=>{const pct=v.correct*20,mx=left+(i+.5)*(right-left)/6;add('rect',{x:mx-33,y:y(pct),width:66,height:bottom-y(pct),rx:7,fill:pct<60?'#efb2ca':pct<80?'#dfc4e2':'#8ecfb0'});add('text',{x:mx,y:y(pct)-8,'text-anchor':'middle',fill:'#35445c','font-size':13,'font-weight':700},pct+'%');add('text',{x:mx,y:277,'text-anchor':'middle',fill:'#657990','font-size':12},'Тема '+(i+1));});
+ bar.append(svg);
+ const lines=document.createElement('div');lines.className='topic-list';vals.forEach((v,i)=>{const row=document.createElement('div');row.className='topic-row'+(v.correct<3?' low':'');row.innerHTML='<span>'+(i+1)+'. '+v.name+'</span><span>'+v.correct+' из 5 ('+(v.correct*20)+'%)</span>';lines.append(row);});bar.append(lines);
+ grid.append(pie,bar);box.append(grid);
+ const weak=vals.filter(v=>v.correct<4).sort((a,b)=>a.correct-b.correct);
+ const recommendation=document.createElement('p');recommendation.className='chart-tip';recommendation.textContent=weak.length?'Рекомендуется повторить: '+weak.map(v=>v.name).join(', ')+'.':'По всем темам результат не ниже 80%.';box.append(recommendation);
+}
+function toggleTrigReview(){const root=document.getElementById('trig-review');const b=document.getElementById('trig-review-toggle');root.hidden=!root.hidden;b.textContent=root.hidden?'Посмотреть разбор заданий':'Скрыть разбор заданий';if(!root.hidden)root.scrollIntoView({block:'start',behavior:'smooth'});}
+function sendTrigSubmission(){
+ if(!trigSubmission||trigSaved)return;
+ const retry=document.getElementById('retry-trig-button');retry.style.display='none';
+ setTrigStatus('Отправляем ответы в Google Таблицу…');
+ const form=document.getElementById('trig-form');form.action=RESULTS_ENDPOINT;document.getElementById('trig-payload').value=JSON.stringify(trigSubmission);
+ clearTimeout(trigTimer);trigTimer=setTimeout(()=>{setTrigStatus('Нет подтверждения от таблицы. Возможно, результаты уже записаны. Проверьте таблицу и при необходимости повторите отправку.','error');retry.style.display='inline-block';},18000);
+ try{form.submit();}catch(err){clearTimeout(trigTimer);setTrigStatus('Ошибка отправки. Проверьте доступ к Google Apps Script.','error');retry.style.display='inline-block';}
+}
+function submitTrigTest(){
+ if(trigSubmission)return;
+ const studentName=document.getElementById('trig-student-name').value.trim().replace(/\s+/g,' ');
+ if(!studentName){setTrigStatus('Введите имя и фамилию ученика.','error');document.getElementById('trig-student-name').focus();return;}
+ const details=getTrigDetails(),correct=details.filter(d=>d.correct).length,answered=details.filter(d=>d.answer).length;
+ if(answered<30&&!confirm('Есть пропущенные задания: '+(30-answered)+'. Завершить тест?'))return;
+ const attemptId=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'attempt-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+ trigSubmission={attemptId,studentName,testTitle:TRIG_TEST_TITLE,submittedAt:new Date().toISOString(),total:30,answered,correct,details};
+ document.getElementById('trig-student-name').disabled=true;
+ document.querySelectorAll('.trig-choice').forEach(el=>el.disabled=true);
+ details.forEach((d,i)=>document.querySelectorAll('.trig-question[data-idx="'+i+'"] .choice-option').forEach((label,j)=>{if(j===trigQuestions[i].correctIndex)label.classList.add('correct-answer');else if(label.querySelector('input').checked)label.classList.add('wrong-answer');}));
+ document.getElementById('submit-trig-button').disabled=true;
+ const result=document.getElementById('trig-result');result.style.display='block';result.textContent='Правильных ответов: '+correct+' из 30. Заполнено: '+answered+' из 30. Ошибок и пропусков: '+(30-correct)+'.';
+ document.getElementById('trig-review-toggle').style.display='inline-block';showTrigDetails(details);showTrigCharts(details);sendTrigSubmission();
+}
+window.addEventListener('message',event=>{
+ if(!trigSubmission||trigSaved||!event.data||event.data.type!=='TRIANGLE_TEST_SAVED'||event.data.attemptId!==trigSubmission.attemptId)return;
+ let host='';try{host=new URL(event.origin).hostname;}catch(e){return;}
+ if(host!=='script.google.com'&&!host.endsWith('.googleusercontent.com'))return;
+ clearTimeout(trigTimer);
+ if(event.data.ok){trigSaved=true;document.getElementById('retry-trig-button').style.display='none';setTrigStatus('Результаты записаны в Google Таблицу!','success');}
+ else{setTrigStatus('Google Таблица не подтвердила запись: '+(event.data.error||'неизвестная ошибка'),'error');document.getElementById('retry-trig-button').style.display='inline-block';}
+});
+function resetTrigTest(){
+ if(trigSubmission&&!trigSaved&&!confirm('Отправка ещё не подтверждена. Начать новую попытку?'))return;
+ clearTimeout(trigTimer);trigSubmission=null;trigSaved=false;
+ document.getElementById('trig-student-name').disabled=false;document.getElementById('trig-student-name').value='';
+ document.querySelectorAll('.trig-choice').forEach(el=>{el.checked=false;el.disabled=false;});
+ document.querySelectorAll('.trig-question .choice-option').forEach(el=>el.classList.remove('correct-answer','wrong-answer'));
+ document.getElementById('submit-trig-button').disabled=false;document.getElementById('retry-trig-button').style.display='none';
+ document.getElementById('trig-result').style.display='none';document.getElementById('trig-charts').hidden=true;document.getElementById('trig-charts').replaceChildren();
+ document.getElementById('trig-review').hidden=true;document.getElementById('trig-review').replaceChildren();document.getElementById('trig-review-toggle').style.display='none';
+ setTrigStatus('');
+}
+renderTrigTest();
+
+    renderTriangleQuestions();
+
+</script>
+</body>
+</html>
