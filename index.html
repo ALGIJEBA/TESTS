@@ -1635,6 +1635,39 @@ function theoryPanel(topic){const section=document.createElement('section');sect
 const catalogWithTests=renderCatalog;
 renderCatalog=function(subject,grade,topic){catalogWithTests(subject,grade,topic);if(topic){const root=document.getElementById(subject);root.insertBefore(theoryPanel(topic),root.querySelector('.cards'));formatMath(root);}};
 </script>
+
+<script>
+// Разделы каталога; существующие тесты и отправка попыток остаются прежними.
+function topicSection(subject,topic){return subject==='math'?(topic.page==='triangles'?'Геометрия':'Алгебра'):'Механика';}
+const catalogWithTheory=renderCatalog;
+renderCatalog=function(subject,grade,topic,section){
+ if(!grade)return catalogWithTheory(subject,grade,topic);
+ section=topic?topicSection(subject,topic):section;
+ const root=document.getElementById(subject),data=subjectCatalog[subject];
+ if(topic){
+  catalogWithTheory(subject,grade,topic);
+  const nav=root.querySelector('.breadcrumbs');
+  nav.replaceChildren(catalogButton(data.title,()=>renderCatalog(subject)),'→',catalogButton(grade+' класс',()=>renderCatalog(subject,grade)),'→',catalogButton(section,()=>renderCatalog(subject,grade,null,section)),'→ '+topic.name);
+  return;
+ }
+ root.replaceChildren();catalogSelection={subject,grade,topic:null};
+ const nav=document.createElement('nav');nav.className='breadcrumbs';nav.setAttribute('aria-label','Путь по разделам');
+ nav.append(catalogButton(data.title,()=>renderCatalog(subject)),'→',catalogButton(grade+' класс',()=>renderCatalog(subject,grade)));
+ if(section)nav.append('→ '+section);root.append(nav);
+ const h=document.createElement('h1');h.textContent=section||'Разделы · '+grade+' класс';root.append(h);
+ const cards=document.createElement('div');cards.className='cards';root.append(cards);
+ const add=(title,action)=>{const c=document.createElement('div');c.className='card';const h=document.createElement('h3');h.textContent=title;c.append(h,catalogButton('Открыть',action));cards.append(c);};
+ if(!section){const sections=subject==='math'?['Алгебра','Геометрия']:['Механика'];sections.forEach(s=>add(s,()=>renderCatalog(subject,grade,null,s)));}
+ else{const topics=data.topics.filter(t=>t.grades.includes(grade)&&topicSection(subject,t)===section);topics.forEach(t=>add(t.name,()=>renderCatalog(subject,grade,t)));if(!topics.length){const p=document.createElement('p');p.textContent='Материалы этого раздела пока не добавлены.';cards.append(p);}}
+ showPageOriginal(subject);
+};
+const originalTestBreadcrumb=addTestBreadcrumb;
+addTestBreadcrumb=function(){
+ originalTestBreadcrumb();if(!catalogSelection?.topic)return;
+ const {subject,grade,topic}=catalogSelection,nav=document.querySelector('.page.active .test-path');
+ if(nav){const section=topicSection(subject,topic);nav.replaceChildren(catalogButton(subjectCatalog[subject].title,()=>renderCatalog(subject)),'→',catalogButton(grade+' класс',()=>renderCatalog(subject,grade)),'→',catalogButton(section,()=>renderCatalog(subject,grade,null,section)),'→',catalogButton(topic.name,()=>renderCatalog(subject,grade,topic)),'→ Тест');}
+};
+</script>
 </body>
 </html>
 
