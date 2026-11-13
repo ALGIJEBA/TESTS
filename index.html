@@ -527,7 +527,7 @@
         </section>
 
         <footer>ТЕСТЫ · Учись в своём темпе ♡</footer>
-    <section class="page" id="physics"><div class="welcome"><div class="eyebrow">ПРЕДМЕТ</div><h1>Физика</h1><p>Механика 10 класса: выбери тему для повторения и проверки знаний.</p></div><div class="cards"><div class="card"><h3>Кинематика и графики</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(5)">Открыть тест</button></div><div class="card"><h3>Динамика: законы Ньютона</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(6)">Открыть тест</button></div><div class="card"><h3>Энергия, окружность и период</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(7)">Открыть тест</button></div></div></section><section class="page" id="extra-test"><button class="button" id="extra-back" onclick="showPage(extraIndex < 5 ? 'math' : 'physics')">К темам предмета</button><h1 id="extra-title"></h1><div id="extra-root"></div></section></main>
+    <section class="page" id="physics"><div class="welcome"><div class="eyebrow">ПРЕДМЕТ</div><h1>Физика</h1><p>Механика 10 класса: выбери тему для повторения и проверки знаний.</p></div><div class="cards"><div class="card"><h3>Кинематика и графики</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(5)">Открыть тест</button></div><div class="card"><h3>Динамика: законы Ньютона</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(6)">Открыть тест</button></div><div class="card"><h3>Энергия, окружность и период</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(7)">Открыть тест</button></div></div></section><section class="page" id="extra-test"><button class="button" id="extra-back" onclick="showPage((extraIndex < 5 || extraIndex === 8) ? 'math' : 'physics')">К темам предмета</button><h1 id="extra-title"></h1><div id="extra-root"></div></section></main>
 </div>
 
 <script>
@@ -1414,7 +1414,7 @@ function showTrigDetails(details){
    const p=document.createElement('p');p.textContent=(i+1)+'. '+q.q;node.append(p);
    const verdict=document.createElement('div');verdict.className='review-chosen';verdict.textContent=d.correct?'✓ Верно':d.answer?'✗ Неверно':'— Пропущено';node.append(verdict);
    if(q.figure && [0,5,8,15,25].includes(i))node.append(createTrigCircle(q.figure));
-   q.options.forEach((o,j)=>{const row=document.createElement('div');row.className='answer '+(j===q.correctIndex?'correct-answer':o===d.answer&&!d.correct?'wrong-answer':'answer-not-chosen');row.textContent=(j===q.correctIndex?'✓ ':o===d.answer?'✗ ':'')+'АБВГ'[j]+'. '+o;node.append(row);});
+   if(!q.options){const input=extraNode('input');input.className='triangle-input';input.name='extra-open-'+i;input.setAttribute('aria-label','Ответ на задание '+(i+1));input.placeholder='Числовой ответ';input.value=state?.selected[i]??'';input.disabled=!!state;wrap.append(input);}else q.options.forEach((o,j)=>{const row=document.createElement('div');row.className='answer '+(j===q.correctIndex?'correct-answer':o===d.answer&&!d.correct?'wrong-answer':'answer-not-chosen');row.textContent=(j===q.correctIndex?'✓ ':o===d.answer?'✗ ':'')+'АБВГ'[j]+'. '+o;node.append(row);});
    const ex=document.createElement('div');ex.className='review-explanation';
    const b=document.createElement('strong');b.textContent='Разбор решения: ';ex.append(b,document.createTextNode(q.explanation));node.append(ex);root.append(node);
  });
@@ -1496,7 +1496,7 @@ function extraNode(tag,text,cls){const e=document.createElement(tag);if(text!==u
 function openExtra(index){
  extraIndex=index; const test=extraTests[index];showPage('extra-test');
  document.getElementById('extra-title').textContent=test.title;
- document.getElementById('extra-back').textContent=index<5?'← Математика':'← Физика';
+ document.getElementById('extra-back').textContent=(index<5||index===8)?'← Математика':'← Физика';
  const root=document.getElementById('extra-root');root.replaceChildren();
  const notes=document.createElement('section');notes.className='lesson-notes';notes.innerHTML=lessonHTML(index);root.append(notes);
  const state=extraStates.get(index);
@@ -1508,15 +1508,15 @@ function openExtra(index){
  const submit=extraNode('button','Завершить тест и отправить','button');submit.onclick=submitExtra;submit.disabled=!!state;root.append(submit);
  const retry=extraNode('button','Повторить отправку','button');retry.id='extra-retry';retry.hidden=!state||state.saved;retry.onclick=()=>sendExtra(index);root.append(retry);
  const fresh=extraNode('button','Новая попытка','button');fresh.onclick=()=>{if(state&&!state.saved&&!confirm('Отправка не подтверждена. Начать новую попытку?'))return;clearTimeout(state?.timer);extraStates.delete(index);openExtra(index);};root.append(fresh);
- const status=extraNode('p',state?.status||'','submission-status');status.id='extra-status';status.setAttribute('role','status');root.append(status);
+ const status=extraNode('p',state?.status||'','submission-status info');status.id='extra-status';status.setAttribute('role','status');root.append(status);
  if(state)renderExtraResults(root,index,state);
 }
 function submitExtra(){
  const index=extraIndex,test=extraTests[index];if(extraStates.has(index))return;
  const name=document.getElementById('extra-name').value.trim().replace(/\s+/g,' ');if(!name){document.getElementById('extra-status').textContent='Введите имя и фамилию.';return;}
- const selected=test.questions.map((q,i)=>{const r=document.querySelector('input[name="extra-'+i+'"]:checked');return r?Number(r.value):-1;});
- if(selected.includes(-1)&&!confirm('Есть пропущенные задания. Завершить тест?'))return;
- const details=test.questions.map((q,i)=>({number:i+1,question:q.q,answer:q.options[selected[i]]||'',expected:q.options[q.correctIndex],correct:selected[i]===q.correctIndex,topic:test.title}));
+ const selected=test.questions.map((q,i)=>{if(!q.options)return document.querySelector('[name="extra-open-'+i+'"]').value.trim();const r=document.querySelector('input[name="extra-'+i+'"]:checked');return r?Number(r.value):-1;});
+ if(selected.some(v=>v===-1||v==='')&&!confirm('Есть пропущенные задания. Завершить тест?'))return;
+ const details=test.questions.map((q,i)=>({number:i+1,question:q.q,answer:q.options?(q.options[selected[i]]||''):selected[i],expected:q.options?q.options[q.correctIndex]:q.answer,correct:q.options?selected[i]===q.correctIndex:(selected[i]!==''&&Number(selected[i].replace(',','.'))===Number(q.answer)),topic:test.title}));
  const payload={attemptId:crypto.randomUUID?crypto.randomUUID():'attempt-'+Date.now()+'-'+Math.random().toString(36).slice(2),studentName:name,testTitle:test.title,submittedAt:new Date().toISOString(),total:details.length,answered:details.filter(d=>d.answer).length,correct:details.filter(d=>d.correct).length,details};
  extraStates.set(index,{payload,selected,saved:false,status:''});openExtra(index);sendExtra(index);
 }
@@ -1667,6 +1667,15 @@ addTestBreadcrumb=function(){
  const {subject,grade,topic}=catalogSelection,nav=document.querySelector('.page.active .test-path');
  if(nav){const section=topicSection(subject,topic);nav.replaceChildren(catalogButton(subjectCatalog[subject].title,()=>renderCatalog(subject)),'→',catalogButton(grade+' класс',()=>renderCatalog(subject,grade)),'→',catalogButton(section,()=>renderCatalog(subject,grade,null,section)),'→',catalogButton(topic.name,()=>renderCatalog(subject,grade,topic)),'→ Тест');}
 };
+</script>
+<style>.lesson-notes.roots-cards{background:#fff8d6;border-color:#eddda0}.roots-cards li{background:#fffcef;padding:12px;margin:8px 0;border-radius:10px}</style><script>
+extraTests.push({"title":"Квадратные корни и ОДЗ","questions":[{"q":"Вычислите √81.","options":["−9","9","±9","40,5"],"correctIndex":1,"explanation":"Арифметический квадратный корень неотрицателен: 9²=81."},{"q":"Вычислите √27·√12.","options":["18","√39","36","6"],"correctIndex":0,"explanation":"√(27·12)=√324=18."},{"q":"Упростите √50.","options":["25√2","10√5","5√2","2√5"],"correctIndex":2,"explanation":"√(25·2)=5√2."},{"q":"Упростите 3√2+5√2.","options":["8√2","8√4","15√2","√16"],"correctIndex":0,"explanation":"Складываем коэффициенты подобных радикалов."},{"q":"Чему равно (√5)²?","options":["25","√10","10","5"],"correctIndex":3,"explanation":"Квадрат арифметического корня из 5 равен 5."},{"q":"Чему равно √(x²) при действительном x?","options":["x","−x","|x|","x²"],"correctIndex":2,"explanation":"Корень неотрицателен; √(x²)=|x|."},{"q":"ОДЗ выражения √(x−3):","options":["x>3","x≥3","x≠3","x≤3"],"correctIndex":1,"explanation":"Подкоренное выражение должно быть неотрицательным."},{"q":"ОДЗ выражения 1/√(x−1):","options":["x≥1","x≠1","x≤1","x>1"],"correctIndex":3,"explanation":"Знаменатель ненулевой: x−1>0."},{"q":"Какое значение дополнительно исключается из ОДЗ 1/(√(x+2)−3)?","options":["7","−2","3","9"],"correctIndex":0,"explanation":"√(x+2)≠3, поэтому x≠7; также x≥−2."},{"q":"Упростите (√3+2)(√3−2).","options":["1","7","−1","−7"],"correctIndex":2,"explanation":"Разность квадратов: 3−4=−1."},{"q":"Вычислите √144−√25. Введите число.","answer":"7","explanation":"12−5=7."},{"q":"Решите √(x+4)=5. Введите x.","answer":"21","explanation":"x+4=25, x=21. Проверка: √25=5."},{"q":"Решите 6/√(x−1)=3. Введите x.","answer":"5","explanation":"ОДЗ x>1. √(x−1)=2, x=5. Проверка: 6/2=3."},{"q":"Решите 4/(√(x+3)−1)=2. Введите x.","answer":"6","explanation":"ОДЗ x≥−3, x≠−2. √(x+3)−1=2, x=6. Проверка: 4/(3−1)=2."},{"q":"Решите √(x+2)=x. Введите единственный корень.","answer":"2","explanation":"x≥0. x+2=x², кандидаты 2 и −1. Число −1 не подходит; √4=2."}]});
+tutoringLessons.push(["Квадратные корни и ОДЗ",["√a — неотрицательное число, квадрат которого равен a; a≥0.","При a,b≥0: √(ab)=√a·√b; при b>0: √(a/b)=√a/√b. √(x²)=|x|.","Выноси полный квадрат: √50=5√2. Складывай только подобные радикалы.","Используй ФСУ: (a+b)(a−b)=a²−b², (a+b)²=a²+2ab+b².","Для корня требуется A≥0, для знаменателя — ненулевое значение. В 1/√A требуется A>0. В 1/(√(x+2)−3) требуется x≥−2 и x≠7.","В уравнении сначала запиши ОДЗ, изолируй корень, возведи в квадрат и проверь кандидатов в исходном выражении."],"√27·√12=√324=18. Уравнение 6/√(x−1)=3: x>1, √(x−1)=2, x=5. Проверка: 6/2=3.","Возведение в квадрат может дать посторонние корни. Проверяй весь знаменатель, а не только подкоренное выражение."]);
+subjectCatalog.math.topics.push({name:'Квадратные корни и ОДЗ',grades:[8],extra:8});
+const theoryPanelBeforeRoots=theoryPanel;
+theoryPanel=function(topic){const panel=theoryPanelBeforeRoots(topic);if(topic.extra===8)panel.classList.add('roots-cards');return panel;};
+const openExtraBeforeRoots=openExtra;
+openExtra=function(index){openExtraBeforeRoots(index);if(index===8)document.querySelector('#extra-root .lesson-notes').classList.add('roots-cards');formatMath(document.getElementById('extra-root'));};
 </script>
 </body>
 </html>
