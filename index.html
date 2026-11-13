@@ -352,7 +352,7 @@
             <span class="menu-icon">📐</span> Математика
         </button>
 
-        <button class="menu-link submenu" data-page="trigonometry"><span class="menu-icon">◉</span> Тригонометрия</button>
+        <button class="menu-link submenu" data-page="physics"><span class="menu-icon">⚛</span> Физика</button><button class="menu-link submenu" data-page="trigonometry"><span class="menu-icon">◉</span> Тригонометрия</button>
 
         <button class="menu-link submenu" data-page="geometry">
             <span class="menu-icon">△</span> Геометрия
@@ -424,13 +424,7 @@
                     <div class="card-icon">⚛️</div>
                     <h3>Физика</h3>
                     <p>Физические явления, величины и законы.</p>
-                    <button class="button" onclick="alert('Тесты по физике пока не добавлены.')">Скоро</button>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🧬</div>
-                    <h3>Биология</h3>
-                    <p>Живые организмы, природа и человек.</p>
-                    <button class="button" onclick="alert('Тесты по биологии пока не добавлены.')">Скоро</button>
+                    <button class="button" onclick="showPage('physics')">Открыть раздел</button>
                 </div>
             </div>
         </section>
@@ -450,7 +444,7 @@
                     <button class="button" onclick="showPage('geometry')">Открыть раздел</button>
                 </div>
                 <div class="card"><div class="card-icon">◉</div><h3>Тригонометрия</h3><p>Окружность, формулы, уравнения и отбор корней ЕГЭ.</p><button class="button" onclick="showPage('trigonometry')">Открыть тест</button></div>
-            </div>
+            <div class="card"><h3>Обыкновенные дроби</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(0)">Открыть тест</button></div><div class="card"><h3>Скобки и уравнения</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(1)">Открыть тест</button></div><div class="card"><h3>Общий множитель и формулы</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(2)">Открыть тест</button></div><div class="card"><h3>Текстовые задачи: движение и работа</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(3)">Открыть тест</button></div><div class="card"><h3>Проценты, смеси и прогрессии</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(4)">Открыть тест</button></div></div>
         </section>
 
         <!-- ГЕОМЕТРИЯ -->
@@ -555,7 +549,7 @@
         </section>
 
         <footer>ТЕСТЫ · Учись в своём темпе ♡</footer>
-    </main>
+    <section class="page" id="physics"><div class="welcome"><div class="eyebrow">ПРЕДМЕТ</div><h1>Физика</h1><p>Механика 10 класса: выбери тему для повторения и проверки знаний.</p></div><div class="cards"><div class="card"><h3>Кинематика и графики</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(5)">Открыть тест</button></div><div class="card"><h3>Динамика: законы Ньютона</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(6)">Открыть тест</button></div><div class="card"><h3>Энергия, окружность и период</h3><p>Теория, 5 заданий, разбор и диаграммы.</p><button class="button" onclick="openExtra(7)">Открыть тест</button></div></div></section><section class="page" id="extra-test"><button class="button" id="extra-back" onclick="showPage(extraIndex < 5 ? 'math' : 'physics')">К темам предмета</button><h1 id="extra-title"></h1><div id="extra-root"></div></section></main>
 </div>
 
 <script>
@@ -1517,5 +1511,62 @@ renderTrigTest();
     renderTriangleQuestions();
 
 </script>
-</body>
+<script>const extraTests=[{"title": "Обыкновенные дроби", "theory": "Знаменатель показывает число равных частей, числитель — сколько взяли. При сложении приведи дроби к общему знаменателю. Для смешанного числа раздели числитель на знаменатель с остатком.", "questions": [{"q": "Сократи 12/18.", "options": ["2/3", "3/2", "6/9", "1/3"], "correctIndex": 0, "explanation": "Числитель и знаменатель делим на 6."}, {"q": "Вычисли 1/3 + 1/4.", "options": ["2/7", "7/12", "1/12", "5/12"], "correctIndex": 1, "explanation": "Общий знаменатель 12: 4/12 + 3/12 = 7/12."}, {"q": "Вычисли 5/6 − 1/4.", "options": ["4/2", "1/2", "7/12", "2/3"], "correctIndex": 2, "explanation": "10/12 − 3/12 = 7/12."}, {"q": "Запиши 23/4 смешанным числом.", "options": ["5 3/4", "6 1/4", "4 3/4", "5 1/4"], "correctIndex": 0, "explanation": "23 = 4·5 + 3."}, {"q": "Сравни 3/5 и 7/10.", "options": ["3/5 > 7/10", "Равны", "Сравнить нельзя", "3/5 < 7/10"], "correctIndex": 3, "explanation": "3/5 = 6/10, а 6 < 7."}]}, {"title": "Скобки и уравнения", "theory": "Умножай каждый член скобки на внешний множитель. При умножении скобок каждый член первой умножь на каждый член второй. С обеими частями уравнения выполняй одинаковые действия.", "questions": [{"q": "Раскрой −3(2x − 5).", "options": ["−6x − 15", "−6x + 15", "6x − 15", "−6x + 5"], "correctIndex": 1, "explanation": "−3·2x = −6x; −3·(−5) = 15."}, {"q": "Упрости (x + 2)(x − 3).", "options": ["x² − x − 6", "x² + x − 6", "x² − 6", "x² − 5x − 6"], "correctIndex": 0, "explanation": "x² − 3x + 2x − 6 = x² − x − 6."}, {"q": "Реши 3(x − 2) = 12.", "options": ["2", "4", "6", "18"], "correctIndex": 2, "explanation": "3x − 6 = 12; 3x = 18; x = 6."}, {"q": "Реши x/3 + 1/2 = 5/6.", "options": ["1/3", "3", "2", "1"], "correctIndex": 3, "explanation": "x/3 = 5/6 − 3/6 = 1/3; x = 1."}, {"q": "Упрости 4(3x − 2) − 2(5x + 1).", "options": ["2x − 10", "2x − 6", "22x − 10", "2x + 10"], "correctIndex": 0, "explanation": "12x − 8 − 10x − 2 = 2x − 10."}]}, {"title": "Общий множитель и формулы", "theory": "ab + ac = a(b + c). (a ± b)² = a² ± 2ab + b². a² − b² = (a − b)(a + b). Чтобы выражение не зависело от x, коэффициент при x должен равняться нулю.", "questions": [{"q": "Вынеси общий множитель: 6x² − 9x.", "options": ["3x(2x − 3)", "3(2x − 9)", "x(6x − 9x)", "3x(2x + 3)"], "correctIndex": 0, "explanation": "Оба слагаемых делятся на 3x."}, {"q": "Раскрой (x − 4)².", "options": ["x² − 16", "x² − 4x + 16", "x² − 8x + 16", "x² + 8x + 16"], "correctIndex": 2, "explanation": "Средний член равен −2·x·4."}, {"q": "Разложи x² − 25.", "options": ["(x − 5)²", "(x − 5)(x + 5)", "(x − 25)(x + 1)", "(x + 5)²"], "correctIndex": 1, "explanation": "Это разность квадратов x и 5."}, {"q": "При каком k выражение 4(3x−2)−2(5x+1)+k(x−3) не зависит от x?", "options": ["2", "0", "−10", "−2"], "correctIndex": 3, "explanation": "После упрощения: (2+k)x − 10 − 3k; 2+k=0."}, {"q": "Чему равно это выражение при k = −2?", "options": ["−4", "4", "−16", "0"], "correctIndex": 0, "explanation": "−10 − 3·(−2) = −4. Поэтому тождественный ноль получить нельзя."}]}, {"title": "Текстовые задачи: движение и работа", "theory": "Движение: s = vt. Навстречу скорости складываются; при погоне вычитаются. По реке: v по течению = v собственная + v течения. Производительность — работа за единицу времени; совместные производительности складываются.", "questions": [{"q": "Два велосипедиста едут навстречу: 12 и 18 км/ч. Между ними 60 км. Через сколько часов встретятся?", "options": ["1", "2", "3", "5"], "correctIndex": 1, "explanation": "60/(12+18) = 2 часа."}, {"q": "Лодка: собственная скорость 10 км/ч, течение 2 км/ч. Сколько часов займут 24 км против течения?", "options": ["2", "2,4", "3", "4"], "correctIndex": 2, "explanation": "Против течения скорость 8 км/ч; 24/8=3."}, {"q": "Половину пути проехали со скоростью 30 км/ч, другую — 60 км/ч. Средняя скорость?", "options": ["45 км/ч", "50 км/ч", "35 км/ч", "40 км/ч"], "correctIndex": 3, "explanation": "Возьми по 60 км: 120/(2+1)=40 км/ч."}, {"q": "Трубы наполняют бассейн за 6 и 3 часа. За сколько часов наполнят вместе?", "options": ["2", "3", "4,5", "9"], "correctIndex": 0, "explanation": "1/6+1/3=1/2 бассейна в час: нужно 2 часа."}, {"q": "Поезд длиной 200 м проходит столб за 10 с. Скорость?", "options": ["10 м/с", "20 м/с", "40 м/с", "2000 м/с"], "correctIndex": 1, "explanation": "Относительно столба поезд проходит собственную длину: 200/10=20."}]}, {"title": "Проценты, смеси и прогрессии", "theory": "p% от a равно ap/100. В смеси сохраняется масса вещества. Арифметическая прогрессия: aₙ = a₁ + (n−1)d. Геометрическая: bₙ = b₁qⁿ⁻¹. При движении по кругу для обгона нужно выиграть один круг.", "questions": [{"q": "Цена 1000 ₽ выросла на 20%, затем снизилась на 20%. Итог?", "options": ["1000 ₽", "1040 ₽", "960 ₽", "800 ₽"], "correctIndex": 2, "explanation": "1000·1,2·0,8=960."}, {"q": "К 200 г 10%-го раствора добавили 300 г воды. Концентрация?", "options": ["4%", "5%", "6%", "10%"], "correctIndex": 0, "explanation": "Вещества 20 г, раствора 500 г; 20/500=4%."}, {"q": "В первый день прочитали 10 страниц, каждый следующий на 3 больше. В пятый день?", "options": ["25", "15", "19", "22"], "correctIndex": 3, "explanation": "a₅=10+4·3=22."}, {"q": "Вклад 1000 ₽ растёт на 10% в год. Через два года?", "options": ["1200 ₽", "1210 ₽", "1100 ₽", "1020 ₽"], "correctIndex": 1, "explanation": "1000·1,1²=1210."}, {"q": "Бегуны движутся в одну сторону по кругу 400 м со скоростями 5 и 3 м/с. Через сколько секунд быстрый впервые догонит медленного, если стартовали вместе?", "options": ["50", "80", "200", "400"], "correctIndex": 2, "explanation": "Относительная скорость 2 м/с; 400/2=200 с."}]}, {"title": "Кинематика и графики", "theory": "При равномерном движении x=x₀+vt. При постоянном ускорении v=v₀+at и s=v₀t+at²/2. Наклон графика x(t) — скорость; площадь под графиком v(t) при v≥0 — путь.", "questions": [{"q": "x = 5 + 3t (м, с). Координата через 4 с?", "options": ["12 м", "17 м", "20 м", "8 м"], "correctIndex": 1, "explanation": "x=5+3·4=17 м."}, {"q": "Скорость выросла с 2 до 10 м/с за 4 с. Ускорение?", "options": ["3 м/с²", "8 м/с²", "2 м/с²", "0,5 м/с²"], "correctIndex": 2, "explanation": "a=(10−2)/4=2 м/с²."}, {"q": "Тело начинает движение из покоя с a=2 м/с². Путь за 3 с?", "options": ["9 м", "6 м", "18 м", "3 м"], "correctIndex": 0, "explanation": "s=at²/2=2·9/2=9 м."}, {"q": "График v(t) горизонтален на уровне 4 м/с от 0 до 5 с. Путь?", "options": ["1,25 м", "9 м", "10 м", "20 м"], "correctIndex": 3, "explanation": "Площадь прямоугольника 4·5=20 м."}, {"q": "На графике x(t) координата постоянна. Что происходит?", "options": ["Равномерное движение", "Покой", "Разгон", "Движение по кругу"], "correctIndex": 1, "explanation": "Координата не меняется: v=0."}]}, {"title": "Динамика: законы Ньютона", "theory": "Инерция — сохранение скорости при нулевой равнодействующей в инерциальной системе. Масса характеризует инертность. Второй закон: Fрез=ma. Силы складываются как векторы. В неподвижной книге на столе сила тяжести уравновешена реакцией опоры.", "questions": [{"q": "Тележка массой 4 кг ускоряется на 2 м/с². Равнодействующая?", "options": ["2 Н", "6 Н", "8 Н", "0,5 Н"], "correctIndex": 2, "explanation": "F=ma=4·2=8 Н."}, {"q": "При той же массе силу удвоили. Ускорение…", "options": ["Удвоится", "Уменьшится вдвое", "Не изменится", "Увеличится в 4 раза"], "correctIndex": 0, "explanation": "a=F/m: при постоянной массе ускорение пропорционально силе."}, {"q": "При той же силе массу увеличили втрое. Ускорение…", "options": ["Утроится", "Не изменится", "Уменьшится в 9 раз", "Уменьшится втрое"], "correctIndex": 3, "explanation": "a=F/m: при утроении массы ускорение делится на 3."}, {"q": "Силы 15 Н вправо и 9 Н влево действуют на 3 кг. Ускорение?", "options": ["8 м/с² вправо", "2 м/с² вправо", "2 м/с² влево", "0"], "correctIndex": 1, "explanation": "Равнодействующая 6 Н вправо; a=6/3=2."}, {"q": "Автобус резко тормозит. Почему пассажир наклоняется вперёд?", "options": ["Его толкает особая сила инерции в системе дороги", "Масса увеличилась", "Тело сохраняет прежнюю скорость", "Сила тяжести направилась вперёд"], "correctIndex": 2, "explanation": "Тело по инерции сохраняет скорость, пока опора тормозит вместе с автобусом."}]}, {"title": "Энергия, окружность и период", "theory": "Кинетическая энергия Eк=mv²/2; потенциальная вблизи Земли Eп=mgh. При отсутствии потерь механическая энергия сохраняется. Период T=t/N, частота ν=1/T. Для равномерного движения по окружности v=2πR/T и a=v²/R.", "questions": [{"q": "m=2 кг, v=3 м/с. Кинетическая энергия?", "options": ["6 Дж", "18 Дж", "9 Дж", "3 Дж"], "correctIndex": 2, "explanation": "Eк=2·3²/2=9 Дж."}, {"q": "m=2 кг подняли на 5 м. g=10 м/с². Прирост потенциальной энергии?", "options": ["100 Дж", "50 Дж", "25 Дж", "10 Дж"], "correctIndex": 0, "explanation": "ΔEп=mgh=2·10·5=100 Дж."}, {"q": "Тело падает из покоя с высоты 5 м без сопротивления. g=10 м/с². Скорость у земли?", "options": ["5 м/с", "20 м/с", "50 м/с", "10 м/с"], "correctIndex": 3, "explanation": "mgh=mv²/2; v=√(2gh)=10 м/с."}, {"q": "Совершено 20 колебаний за 10 с. Период?", "options": ["2 с", "0,5 с", "10 с", "20 с"], "correctIndex": 1, "explanation": "T=t/N=10/20=0,5 с; частота 2 Гц."}, {"q": "По окружности R=2 м тело движется со скоростью 4 м/с. Ускорение?", "options": ["2 м/с²", "4 м/с²", "8 м/с²", "0"], "correctIndex": 2, "explanation": "a=v²/R=16/2=8 м/с², направлено к центру."}]}];
+const extraStates = new Map();
+let extraIndex = 0;
+function extraNode(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
+function openExtra(index){
+ extraIndex=index; const test=extraTests[index];showPage('extra-test');
+ document.getElementById('extra-title').textContent=test.title;
+ document.getElementById('extra-back').textContent=index<5?'← Математика':'← Физика';
+ const root=document.getElementById('extra-root');root.replaceChildren();
+ root.append(extraNode('div',test.theory,'triangle-theory'));
+ const state=extraStates.get(index);
+ const name=extraNode('input');name.id='extra-name';name.className='triangle-input';name.placeholder='Имя и фамилия';name.setAttribute('aria-label','Имя и фамилия');name.maxLength=120;name.value=state?.payload.studentName||'';name.disabled=!!state;root.append(name);
+ test.questions.forEach((q,i)=>{
+ const wrap=extraNode('div',undefined,'triangle-question');wrap.append(extraNode('p',(i+1)+'. '+q.q));
+ q.options.forEach((o,j)=>{const label=extraNode('label',undefined,'answer choice-option');const r=extraNode('input');r.type='radio';r.name='extra-'+i;r.value=j;r.disabled=!!state;r.checked=state?.selected[i]===j;label.append(r,document.createTextNode(' '+o));if(state){if(j===q.correctIndex)label.classList.add('correct-answer');else if(r.checked)label.classList.add('wrong-answer');}wrap.append(label);});root.append(wrap);
+ });
+ const submit=extraNode('button','Завершить тест и отправить','button');submit.onclick=submitExtra;submit.disabled=!!state;root.append(submit);
+ const retry=extraNode('button','Повторить отправку','button');retry.id='extra-retry';retry.hidden=!state||state.saved;retry.onclick=()=>sendExtra(index);root.append(retry);
+ const fresh=extraNode('button','Новая попытка','button');fresh.onclick=()=>{if(state&&!state.saved&&!confirm('Отправка не подтверждена. Начать новую попытку?'))return;clearTimeout(state?.timer);extraStates.delete(index);openExtra(index);};root.append(fresh);
+ const status=extraNode('p',state?.status||'','submission-status');status.id='extra-status';status.setAttribute('role','status');root.append(status);
+ if(state)renderExtraResults(root,index,state);
+}
+function submitExtra(){
+ const index=extraIndex,test=extraTests[index];if(extraStates.has(index))return;
+ const name=document.getElementById('extra-name').value.trim().replace(/\s+/g,' ');if(!name){document.getElementById('extra-status').textContent='Введите имя и фамилию.';return;}
+ const selected=test.questions.map((q,i)=>{const r=document.querySelector('input[name="extra-'+i+'"]:checked');return r?Number(r.value):-1;});
+ if(selected.includes(-1)&&!confirm('Есть пропущенные задания. Завершить тест?'))return;
+ const details=test.questions.map((q,i)=>({number:i+1,question:q.q,answer:q.options[selected[i]]||'',expected:q.options[q.correctIndex],correct:selected[i]===q.correctIndex,topic:test.title}));
+ const payload={attemptId:crypto.randomUUID?crypto.randomUUID():'attempt-'+Date.now()+'-'+Math.random().toString(36).slice(2),studentName:name,testTitle:test.title,submittedAt:new Date().toISOString(),total:details.length,answered:details.filter(d=>d.answer).length,correct:details.filter(d=>d.correct).length,details};
+ extraStates.set(index,{payload,selected,saved:false,status:''});openExtra(index);sendExtra(index);
+}
+function renderExtraResults(root,index,state){
+ const p=state.payload,pct=Math.round(100*p.correct/p.total);
+ root.append(extraNode('h2','Правильно: '+p.correct+' из '+p.total+' ('+pct+'%)'));
+ const grid=extraNode('div',undefined,'chart-grid');const pie=extraNode('div',undefined,'donut');const wrong=p.answered-p.correct;
+ pie.style.background='conic-gradient(#78c993 0 '+100*p.correct/p.total+'%,#efb2ca '+100*p.correct/p.total+'% '+100*(p.correct+wrong)/p.total+'%,#dce5f1 0)';pie.setAttribute('role','img');pie.setAttribute('aria-label','Верно '+p.correct+', неверно '+wrong+', пропущено '+(p.total-p.answered));grid.append(pie);
+ const bars=extraNode('div');bars.append(extraNode('h3','Результат по теме: '+p.testTitle));const progress=extraNode('progress');progress.max=p.total;progress.value=p.correct;progress.style.width='100%';progress.setAttribute('aria-label','Верных ответов по теме');bars.append(progress,extraNode('p','Верно: '+p.correct+' · Ошибки: '+wrong+' · Пропуски: '+(p.total-p.answered)));grid.append(bars);root.append(grid);
+ const review=extraNode('details');review.append(extraNode('summary','Посмотреть разбор заданий'));
+ p.details.forEach((d,i)=>{const box=extraNode('div',undefined,'review-task '+(d.correct?'is-correct':'is-wrong'));box.append(extraNode('h3',(i+1)+'. '+d.question),extraNode('p','Твой ответ: '+(d.answer||'Пропущено')),extraNode('p','Правильный ответ: '+d.expected),extraNode('p',extraTests[index].questions[i].explanation));review.append(box);});root.append(review);
+}
+function setExtraStatus(index,text){const s=extraStates.get(index);s.status=text;if(extraIndex===index){document.getElementById('extra-status').textContent=text;document.getElementById('extra-retry').hidden=s.saved;}}
+function sendExtra(index){
+ const s=extraStates.get(index);if(!s||s.saved)return;clearTimeout(s.timer);
+ const old=document.getElementById('extra-transport-'+index);if(old)old.remove();
+ const transport=extraNode('div');transport.id='extra-transport-'+index;transport.hidden=true;
+ const frame=extraNode('iframe');frame.name='extra-frame-'+index;frame.title='Служебная отправка результатов';const form=extraNode('form');form.method='POST';form.action=RESULTS_ENDPOINT;form.target=frame.name;
+ const input=extraNode('input');input.name='payload';input.value=JSON.stringify(s.payload);form.append(input);transport.append(frame,form);document.body.append(transport);
+ setExtraStatus(index,'Отправляем результат…');
+ s.timer=setTimeout(()=>setExtraStatus(index,'Подтверждение не получено. Проверьте таблицу и повторите отправку. Для новых тестов требуется обновить Code.gs.'),18000);
+ try{form.submit();}catch(e){clearTimeout(s.timer);setExtraStatus(index,'Отправка не выполнена. Повторите попытку.');}
+}
+window.addEventListener('message',event=>{
+ let host;try{host=new URL(event.origin).hostname;}catch(e){return;}
+ if(host!=='script.google.com'&&!host.endsWith('.googleusercontent.com'))return;
+ if(event.data?.type!=='TRIANGLE_TEST_SAVED')return;
+ for(const [index,s] of extraStates){if(event.data.attemptId!==s.payload.attemptId)continue;clearTimeout(s.timer);s.saved=event.data.ok===true;setExtraStatus(index,s.saved?'Результаты записаны в Google Таблицу!':'Ошибка записи: '+(event.data.error||'неизвестная ошибка'));}
+});
+</script></body>
 </html>
