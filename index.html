@@ -1677,6 +1677,48 @@ theoryPanel=function(topic){const panel=theoryPanelBeforeRoots(topic);if(topic.e
 const openExtraBeforeRoots=openExtra;
 openExtra=function(index){openExtraBeforeRoots(index);if(index===8)document.querySelector('#extra-root .lesson-notes').classList.add('roots-cards');formatMath(document.getElementById('extra-root'));};
 </script>
+
+<script>
+// Экзаменационные подборки используют существующие темы, теорию и тесты.
+function examTopics(subject,exam){
+ const grade=exam==='ОГЭ'?9:11;
+ return subjectCatalog[subject].topics.filter(t=>t.grades.includes(grade)||(subject==='physics'&&exam==='ЕГЭ'&&t.grades.includes(10)));
+}
+function renderExam(subject,exam){
+ const root=document.getElementById(subject),grade=exam==='ОГЭ'?9:11;root.replaceChildren();
+ catalogSelection=null;
+ const nav=document.createElement('nav');nav.className='breadcrumbs';nav.setAttribute('aria-label','Путь по разделам');
+ nav.append(catalogButton(subjectCatalog[subject].title,()=>renderCatalog(subject)),'→ '+exam);root.append(nav);
+ const h=document.createElement('h1');h.textContent=exam+' · '+subjectCatalog[subject].title;root.append(h);
+ const note=document.createElement('p');note.textContent='Доступные темы для повторения. Подборка не является полным экзаменационным вариантом.';root.append(note);
+ const topics=examTopics(subject,exam);
+ if(!topics.length){const p=document.createElement('p');p.textContent='Материалы для этого экзамена пока не добавлены.';root.append(p);}
+ for(const section of [...new Set(topics.map(t=>topicSection(subject,t)))]){
+  const heading=document.createElement('h2');heading.textContent=section;root.append(heading);
+  const cards=document.createElement('div');cards.className='cards';root.append(cards);
+  topics.filter(t=>topicSection(subject,t)===section).forEach(topic=>{
+   const card=document.createElement('div');card.className='card';
+   const title=document.createElement('h3');title.textContent=topic.name;
+   card.append(title,catalogButton('Теория и тест',()=>{
+    renderCatalog(subject,grade,topic);
+    const back=catalogButton('← '+exam,()=>renderExam(subject,exam));
+    document.getElementById(subject).prepend(back);
+   }));cards.append(card);
+  });
+ }
+ showPageOriginal(subject);
+}
+const catalogBeforeExams=renderCatalog;
+renderCatalog=function(subject,grade,topic,section){
+ catalogBeforeExams(subject,grade,topic,section);
+ if(grade)return;
+ const root=document.getElementById(subject),block=document.createElement('section');block.className='section exam-paths';
+ const h=document.createElement('h2');h.textContent='Подготовка к экзаменам';block.append(h);
+ const cards=document.createElement('div');cards.className='cards';block.append(cards);
+ ['ОГЭ','ЕГЭ'].forEach(exam=>{const card=document.createElement('div');card.className='card';const title=document.createElement('h3');title.textContent=exam;card.append(title,catalogButton('Открыть '+exam,()=>renderExam(subject,exam)));cards.append(card);});
+ root.insertBefore(block,root.querySelector('.cards'));
+};
+</script>
 </body>
 </html>
 
