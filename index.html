@@ -1856,7 +1856,82 @@ openExtra=function(index){openBeforeForces(index);if(index!==forcesTestIndex)ret
  const root=document.getElementById('extra-root');const questions=root.querySelectorAll('.triangle-question');
  forceBlocks.forEach((block,n)=>root.insertBefore(forceLab(block,n),questions[n*3]));formatMath(root);
 };
-</script></body>
+</script><style>
+.unit-lab{border:1px solid #dce7f2;border-radius:22px;background:linear-gradient(135deg,#f6fbff,#fff7fc);padding:24px;margin:24px 0;color:#35445c}
+.unit-lab *{box-sizing:border-box}.unit-lab h2{margin-bottom:8px}.unit-lab .unit-intro{font-size:14px;line-height:1.7;margin-bottom:16px}
+.unit-grid{display:grid;grid-template-columns:minmax(270px,1.2fr) minmax(240px,1fr);gap:24px;align-items:center}
+.unit-drawing{position:relative;min-width:0}.unit-svg{display:block;width:100%;max-width:580px;margin:auto;touch-action:none;user-select:none;overflow:visible}
+.unit-svg text{font-family:"Segoe UI",Arial,sans-serif;fill:#526681;font-size:13px}.unit-svg .unit-mark{cursor:pointer;outline:none}.unit-mark:focus circle,.unit-mark:hover circle{stroke:#9a4a87;stroke-width:4}.unit-mark:focus text{font-weight:800}
+.unit-tip{position:absolute;z-index:2;pointer-events:none;background:#fff;border:1px solid #d6e3f0;border-radius:12px;padding:10px 14px;box-shadow:0 8px 25px #40567422;font-size:14px;left:50%;top:4%;transform:translateX(-50%);white-space:nowrap;color:#35445c}
+.unit-controls{display:grid;gap:16px}.unit-controls label{font-weight:700;display:block;margin-bottom:8px}.unit-controls input[type=range]{width:100%;accent-color:#bf7da8;cursor:pointer}.unit-angle-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.unit-controls input[type=number]{width:110px;padding:10px 12px;border:1px solid #c9dbea;border-radius:10px;font:inherit;background:#fff;color:#35445c}.unit-angle-output{font-weight:700;color:#4a6889;min-height:32px;display:flex;align-items:center}
+.unit-presets{display:flex;flex-wrap:wrap;gap:6px}.unit-presets button{border:1px solid #d6e4f0;background:white;color:#526681;padding:7px 10px;border-radius:9px;cursor:pointer;font:inherit;font-size:13px}.unit-presets button[aria-pressed=true]{background:#f4d9e9;border-color:#c88bb2;color:#593e56}
+.unit-values{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;font-size:15px}.unit-values caption{text-align:left;padding:0 0 12px;font-weight:700;color:#405674}.unit-values th,.unit-values td{padding:12px 10px;text-align:left;border-bottom:1px solid #e5edf5}.unit-values th{font-size:12px;color:#657d94;background:#eaf4fc}.unit-values td:first-child{font-weight:700;white-space:nowrap}.unit-values math{font-size:1.15em}.unit-note{font-size:13px;line-height:1.7;margin-top:12px}.unit-key{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;margin-top:10px}.unit-key span:first-child{color:#497faf}.unit-key span:last-child{color:#b56694}.unit-lab button:focus-visible,.unit-lab input:focus-visible{outline:3px solid #568cb7;outline-offset:3px}
+@media(max-width:900px){.unit-grid{grid-template-columns:1fr}.unit-svg{max-width:480px}}@media(max-width:480px){.unit-lab{padding:16px}.unit-values th,.unit-values td{padding:10px 6px;font-size:13px}}
+</style>
+<script>
+const unitAngles=[0,30,45,60,90,120,135,150,180,210,225,240,270,300,315,330];
+const unitNS='http://www.w3.org/2000/svg';
+const unitMathNS='http://www.w3.org/1998/Math/MathML';
+function unitGCD(a,b){return b?unitGCD(b,a%b):a;}
+function unitRadians(deg){if(deg===0)return '0';const n=Math.round(deg*10),g=unitGCD(n,1800),a=n/g,b=1800/g;return (a===1?'':a)+'π'+(b===1?'':'/'+b);}
+function unitExact(deg){
+ const d=((deg%360)+360)%360;
+ const sin={0:'0',30:'1/2',45:'√2/2',60:'√3/2',90:'1',120:'√3/2',135:'√2/2',150:'1/2',180:'0',210:'−1/2',225:'−√2/2',240:'−√3/2',270:'−1',300:'−√3/2',315:'−√2/2',330:'−1/2'};
+ if(!Object.hasOwn(sin,d))return null;
+ const tan={0:'0',30:'√3/3',45:'1',60:'√3',90:null,120:'−√3',135:'−1',150:'−√3/3',180:'0',210:'√3/3',225:'1',240:'√3',270:null,300:'−√3',315:'−1',330:'−√3/3'};
+ const cot={0:null,30:'√3',45:'1',60:'√3/3',90:'0',120:'−√3/3',135:'−1',150:'−√3',180:null,210:'√3',225:'1',240:'√3/3',270:'0',300:'−√3/3',315:'−1',330:'−√3'};
+ return [sin[d],sin[(d+90)%360],tan[d],cot[d]];
+}
+function unitValues(deg){const r=deg*Math.PI/180,s=Math.sin(r),c=Math.cos(r),zero=x=>Math.abs(x)<1e-12;return [zero(s)?0:s,zero(c)?0:c,zero(c)?null:s/c,zero(s)?null:c/s];}
+function unitDecimal(x){return x===null?'не определён':(Math.abs(x)<.0000005?'0':x.toFixed(6).replace(/\.?0+$/,'').replace('.',','));}
+function unitMath(text){
+ const math=document.createElementNS(unitMathNS,'math');math.setAttribute('aria-label',text);
+ const el=(tag,v)=>{const n=document.createElementNS(unitMathNS,tag);if(v!==undefined)n.textContent=v;return n;};
+ const atom=t=>{const row=el('mrow');if(t.startsWith('−')){row.append(el('mo','−'));t=t.slice(1);}if(t.startsWith('√')){const root=el('msqrt');root.append(el('mn',t.slice(1)));row.append(root);}else if(t.includes('π')){if(t!=='π')row.append(el('mn',t.replace('π','')));row.append(el('mi','π'));}else row.append(el('mn',t));return row;};
+ if(text.includes('/')){const [a,b]=text.split('/'),f=el('mfrac');f.append(atom(a),atom(b));math.append(f);}else math.append(atom(text));return math;
+}
+function createUnitLab(){
+ const host=document.createElement('section');host.className='unit-lab';host.setAttribute('aria-label','Интерактивная тригонометрическая окружность');
+ host.innerHTML=`<h2>Тригонометрическая окружность</h2><p class="unit-intro">Наведи курсор на основную точку, чтобы увидеть sin и cos. Нажми на точку или перетаскивай луч по кругу — выбранный угол и все четыре функции появятся в таблице. На телефоне касайся круга. Положительный угол отсчитывается против часовой стрелки.</p><div class="unit-grid"><div class="unit-drawing"><svg class="unit-svg" viewBox="0 0 500 500" role="group" aria-label="Единичная окружность. Основные точки доступны клавишей Tab, выбор — Enter или пробелом."></svg><div class="unit-tip" role="status" hidden></div><div class="unit-key"><span>Синий отрезок — cos α</span><span>Розовый отрезок — sin α</span></div></div><div class="unit-controls"><div><label>Выбери угол α</label><input class="unit-range" type="range" min="0" max="360" step="0.1" value="30" aria-label="Угол в градусах"><div class="unit-angle-row"><input class="unit-number" type="number" min="0" max="360" step="0.1" value="30" aria-label="Точное значение угла в градусах"><span>градусов</span><output class="unit-angle-output" aria-live="polite"></output></div></div><div class="unit-presets" aria-label="Основные углы"></div><table class="unit-values"><caption>Значения выбранного угла</caption><thead><tr><th scope="col">Функция</th><th scope="col">Точно</th><th scope="col">Приближённо</th></tr></thead><tbody></tbody></table><p class="unit-note">Координаты точки: (cos α; sin α). Тангенс — отношение sin α к cos α, котангенс — cos α к sin α. При нулевом знаменателе функция не определена. Для произвольного угла показаны приближения до 6 знаков.</p></div></div>`;
+ const svg=host.querySelector('svg'),tip=host.querySelector('.unit-tip'),range=host.querySelector('.unit-range'),number=host.querySelector('.unit-number'),output=host.querySelector('output'),tbody=host.querySelector('tbody');
+ const make=(tag,attrs={},text)=>{const n=document.createElementNS(unitNS,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);if(text!==undefined)n.textContent=text;svg.append(n);return n;};
+ const R=180,C=250;make('circle',{cx:C,cy:C,r:R,fill:'#fff',stroke:'#9fbad3','stroke-width':2});
+ make('line',{x1:32,y1:C,x2:468,y2:C,stroke:'#8ca2bb','stroke-width':1.5});make('line',{x1:C,y1:468,x2:C,y2:32,stroke:'#8ca2bb','stroke-width':1.5});
+ make('text',{x:462,y:239},'x');make('text',{x:260,y:35},'y');make('text',{x:233,y:269},'0');
+ make('text',{x:350,y:140,opacity:.5},'I');make('text',{x:140,y:140,opacity:.5},'II');make('text',{x:135,y:365,opacity:.5},'III');make('text',{x:350,y:365,opacity:.5},'IV');
+ const arc=make('path',{fill:'#e7d3eb88',stroke:'#b37ba9','stroke-width':2});
+ const projection=make('path',{fill:'none',stroke:'#a6b7cc','stroke-dasharray':'5 5','stroke-width':1.5});
+ const cosLine=make('line',{x1:C,y1:C,y2:C,stroke:'#609ac8','stroke-width':6,'stroke-linecap':'round'});
+ const sinLine=make('line',{x1:C,y1:C,x2:C,stroke:'#d48ab5','stroke-width':6,'stroke-linecap':'round'});
+ const ray=make('line',{x1:C,y1:C,stroke:'#657fa2','stroke-width':2.5});
+ const point=make('circle',{r:7,fill:'#a369a2',stroke:'white','stroke-width':2,'pointer-events':'none'});
+ let chosen=30,drag=false;
+ function showTip(a){const exact=unitExact(a);tip.replaceChildren(a+'° · sin = ',unitMath(exact[0]),' · cos = ',unitMath(exact[1]));tip.hidden=false;}
+ const marks=[];
+ for(const a of unitAngles){const r=a*Math.PI/180,x=C+R*Math.cos(r),y=C-R*Math.sin(r);const g=make('g',{class:'unit-mark',tabindex:0,role:'button','aria-label':a+' градусов. Выбрать угол.'});
+ const hit=document.createElementNS(unitNS,'circle');hit.setAttribute('cx',x);hit.setAttribute('cy',y);hit.setAttribute('r',13);hit.setAttribute('fill','transparent');g.append(hit);
+ const dot=document.createElementNS(unitNS,'circle');for(const [k,v] of Object.entries({cx:x,cy:y,r:4.5,fill:'#7e9fbd',stroke:'white','stroke-width':1}))dot.setAttribute(k,v);g.append(dot);
+ const label=document.createElementNS(unitNS,'text');label.setAttribute('x',C+211*Math.cos(r));label.setAttribute('y',C-211*Math.sin(r)+4);label.setAttribute('text-anchor','middle');label.textContent=a+'°';g.append(label);
+ g.addEventListener('pointerenter',()=>{if(!drag)showTip(a);});g.addEventListener('pointerleave',()=>{tip.hidden=true;});g.addEventListener('focus',()=>showTip(a));g.addEventListener('blur',()=>{tip.hidden=true;});g.addEventListener('click',()=>setAngle(a));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setAngle(a);}});marks.push([a,g]);}
+ const rows=['sin α','cos α','tg α','ctg α'].map(name=>{const tr=document.createElement('tr'),th=document.createElement('th'),exact=document.createElement('td'),approx=document.createElement('td');th.scope='row';th.textContent=name;tr.append(th,exact,approx);tbody.append(tr);return [exact,approx];});
+ const buttons=[];for(const a of [0,30,45,60,90,180,270,360]){const b=document.createElement('button');b.type='button';b.textContent=a+'°';b.onclick=()=>setAngle(a);host.querySelector('.unit-presets').append(b);buttons.push([a,b]);}
+ function setAngle(raw){const v=Number(raw);if(!Number.isFinite(v))return;chosen=Math.round(Math.max(0,Math.min(360,v))*10)/10;range.value=chosen;number.value=chosen;
+ const r=chosen*Math.PI/180,x=C+R*Math.cos(r),y=C-R*Math.sin(r);ray.setAttribute('x2',x);ray.setAttribute('y2',y);point.setAttribute('cx',x);point.setAttribute('cy',y);cosLine.setAttribute('x2',x);sinLine.setAttribute('y2',y);projection.setAttribute('d',`M ${x} ${C} V ${y} H ${C}`);
+ const ar=43,ax=C+ar*Math.cos(r),ay=C-ar*Math.sin(r);arc.setAttribute('d',chosen===0?'':chosen===360?`M ${C} ${C} L ${C+ar} ${C} A ${ar} ${ar} 0 1 0 ${C-ar} ${C} A ${ar} ${ar} 0 1 0 ${C+ar} ${C} Z`:`M ${C} ${C} L ${C+ar} ${C} A ${ar} ${ar} 0 ${chosen>180?1:0} 0 ${ax} ${ay} Z`);
+ output.replaceChildren('α = '+chosen.toLocaleString('ru-RU')+'° = ',unitMath(unitRadians(chosen)));
+ const exact=unitExact(chosen),vals=unitValues(chosen);rows.forEach(([e,n],i)=>{e.replaceChildren();if(exact&&exact[i]!==null)e.append(unitMath(exact[i]));else e.textContent=vals[i]===null?'не определён':'—';n.textContent=unitDecimal(vals[i]);});
+ for(const [a,g] of marks)g.setAttribute('aria-pressed',String(a===chosen||(chosen===360&&a===0)));for(const [a,b] of buttons)b.setAttribute('aria-pressed',String(a===chosen));range.setAttribute('aria-valuetext',chosen+' градусов');tip.hidden=true;
+ }
+ function pointerAngle(e){const matrix=svg.getScreenCTM();if(!matrix)return;const p=new DOMPoint(e.clientX,e.clientY).matrixTransform(matrix.inverse());if(Math.hypot(p.x-C,p.y-C)<12)return;let a=(Math.atan2(C-p.y,p.x-C)*180/Math.PI+360)%360;const near=unitAngles.find(n=>Math.abs(((a-n+540)%360)-180)<2);if(near!==undefined)a=near;setAngle(a);}
+ svg.addEventListener('pointerdown',e=>{if(e.button!==0)return;e.preventDefault();drag=true;svg.setPointerCapture(e.pointerId);pointerAngle(e);});svg.addEventListener('pointermove',e=>{if(drag)pointerAngle(e);});svg.addEventListener('pointerup',e=>{if(drag)pointerAngle(e);drag=false;if(svg.hasPointerCapture(e.pointerId))svg.releasePointerCapture(e.pointerId);});svg.addEventListener('pointercancel',()=>{drag=false;});svg.addEventListener('lostpointercapture',()=>{drag=false;});
+ range.addEventListener('input',()=>setAngle(range.value));number.addEventListener('input',()=>{if(number.value!==''&&Number(number.value)>=0&&Number(number.value)<=360)setAngle(number.value);});number.addEventListener('change',()=>setAngle(number.value===''?chosen:number.value));setAngle(30);return host;
+}
+const unitTrigPage=document.getElementById('trigonometry');unitTrigPage.insertBefore(createUnitLab(),unitTrigPage.querySelector('.section'));
+const theoryBeforeUnitCircle=theoryPanel;
+theoryPanel=function(topic){const panel=theoryBeforeUnitCircle(topic);if(topic.page==='trigonometry')panel.prepend(createUnitLab());return panel;};
+</script>
+
+</body>
 </html>
 
 
