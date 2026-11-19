@@ -1669,7 +1669,7 @@ renderCatalog=function(subject,grade,topic,section){
  const h=document.createElement('h1');h.textContent=section||'Разделы · '+grade+' класс';root.append(h);
  const cards=document.createElement('div');cards.className='cards';root.append(cards);
  const add=(title,action)=>{const c=document.createElement('div');c.className='card';const h=document.createElement('h3');h.textContent=title;c.append(h,catalogButton('Открыть',action));cards.append(c);};
- if(!section){const sections=subject==='math'?['Алгебра','Геометрия']:['Механика'];sections.forEach(s=>add(s,()=>renderCatalog(subject,grade,null,s)));}
+ if(!section){const sections=subject==='math'?['Алгебра','Геометрия']:[...new Set(data.topics.filter(t=>t.grades.includes(grade)).map(t=>topicSection(subject,t)))];sections.forEach(s=>add(s,()=>renderCatalog(subject,grade,null,s)));}
  else{const topics=data.topics.filter(t=>t.grades.includes(grade)&&topicSection(subject,t)===section);topics.forEach(t=>add(t.name,()=>renderCatalog(subject,grade,t)));if(!topics.length){const p=document.createElement('p');p.textContent='Материалы этого раздела пока не добавлены.';cards.append(p);}}
  showPageOriginal(subject);
 };
