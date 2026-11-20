@@ -15,7 +15,7 @@ function fig(body,caption,w=560,h=300){return `<figure class="review-figure"><sv
 function plot(f,{xmin=-4,xmax=5,ymin=-5,ymax=7,title='',points=[],color='#527fa2',second=null}={}){
  const W=600,H=340,L=52,R=560,T=25,B=290,X=x=>L+(x-xmin)/(xmax-xmin)*(R-L),Y=y=>B-(y-ymin)/(ymax-ymin)*(B-T);let s='';
  for(let x=Math.ceil(xmin);x<=xmax;x++){s+=line(X(x),T,X(x),B,'#e2eaf2',1);if(x!==0)s+=txt(X(x),Math.min(B,Y(0))+22,x);}
- for(let y=Math.ceil(ymin);y<=ymax;y++){s+=line(L,Y(y),R,Y(y),'#e2eaf2',1);if(y!==0)s+=txt(Math.max(L,X(0))-10,Y(y)+5,y,'end');}
+ const rough=(ymax-ymin)/6,pow=10**Math.floor(Math.log10(rough)),step=([1,2,5,10].find(v=>v*pow>=rough)||10)*pow;for(let j=Math.ceil(ymin/step);j*step<=ymax+1e-9;j++){const y=Number((j*step).toFixed(6));s+=line(L,Y(y),R,Y(y),'#e2eaf2',1);if(y!==0)s+=txt(Math.max(L,X(0))-10,Y(y)+5,String(y).replace('.',','),'end');}
  s+=line(L,Y(0),R,Y(0),'#7891a8')+line(X(0),T,X(0),B,'#7891a8')+txt(R+16,Y(0)-5,'x')+txt(X(0)+12,T-8,'y')+txt(X(0)-13,Y(0)+20,'0');
  const curve=(fn,c)=>{let d='',pen=false;for(let i=0;i<=500;i++){const x=xmin+(xmax-xmin)*i/500,y=fn(x);if(!Number.isFinite(y)||y<ymin||y>ymax){pen=false;continue;}d+=(pen?'L':'M')+X(x).toFixed(2)+' '+Y(y).toFixed(2);pen=true;}return `<path d="${d}" fill="none" stroke="${c}" stroke-width="3"/>`;};s+=curve(f,color);if(second)s+=curve(second,'#b56898');
  for(const [x,y,label]of points)s+=`<circle cx="${X(x)}" cy="${Y(y)}" r="4" fill="${color}"/>`+(label?txt(X(x)+10,Y(y)-12,label,'start'):'');
@@ -106,7 +106,7 @@ function questionVisual(t,i){const q=t.questions[i].q;
  if(t.title.startsWith('Кинематика ·')){if(i===3)return motionGraph('rest');if(i===11)return motionGraph('vx');if([12,13].includes(i))return energy();}
  if(t.title.startsWith('Движение по окружности')&&[3,4,6,8,12,14].includes(i))return circleMotion();
  if(t.title.startsWith('Работа, мощность')&&[1,2,10].includes(i))return work();
- if(t.title.startsWith('Периодическое')&&[0,1,4,5,7].includes(i))return sine();
+ if(t.title.startsWith('Периодическое')&&[0,1,4,5,7].includes(i)){if(i===4||i===5)return plot(t=>.2*Math.cos(3*t),{xmin:0,xmax:4,ymin:-.3,ymax:.3,title:'График по условию: x = 0,2 cos(3t). По горизонтали t, с; по вертикали x, м.'}).replace('>x</text>','>t</text>').replace('>y</text>','>x</text>');return sine();}
  if(t.title==='Динамика: законы Ньютона'&&[0,3].includes(i))return forces();
  return '';}
 const oldOpen=openExtra;openExtra=function(index){oldOpen(index);const root=document.getElementById('extra-root');if(!root)return;const test=extraTests[index];root.querySelectorAll('.triangle-question').forEach((wrap,i)=>{if(wrap.querySelector('.review-figure,.review-table'))return;const html=questionVisual(test,i);if(html)wrap.querySelector('p')?.insertAdjacentHTML('afterend',html);});formatMath(root);};
