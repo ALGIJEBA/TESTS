@@ -1952,8 +1952,25 @@ openExtra=function(index){openBeforeFractionEquations7(index);if(index===fractio
 <script src="mixture-lab.js?v=2"></script>
 <script src="content-review.js?v=2"></script>
 <script src="newton-cat-lab.js?v=1"></script>
+<script>
+(function(){
+function addEgeCollection(){
+ const root=document.getElementById('math');if(!root||root.querySelector('[data-ege-first12]'))return;
+ const card=document.createElement('div');card.className='card';card.dataset.egeFirst12='true';
+ const h=document.createElement('h3');h.textContent='ЕГЭ · Сборник первых 12-ти';
+ const p=document.createElement('p');p.textContent='12 заданий с кратким ответом, чертежами и графиками. Проверка ответов и версия для печати.';
+ const a=document.createElement('a');a.className='button';a.href='EGE_pervye_12_test.html';a.textContent='Открыть тест';
+ card.append(h,p,a);root.append(card);
+}
+const previousExam=renderExam;
+renderExam=function(subject,exam){previousExam.apply(this,arguments);if(subject==='math'&&exam==='ЕГЭ')addEgeCollection();};
+const previousCatalog=renderCatalog;
+renderCatalog=function(subject){previousCatalog.apply(this,arguments);if(subject==='math'&&arguments[1]==null)addEgeCollection();};
+})();
+</script>
 </body>
 </html>
+
 
 
 
