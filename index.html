@@ -1959,7 +1959,7 @@ function addEgeCollection(){
  const card=document.createElement('div');card.className='card';card.dataset.egeFirst12='true';
  const h=document.createElement('h3');h.textContent='ЕГЭ · Сборник первых 12-ти';
  const p=document.createElement('p');p.textContent='12 заданий с кратким ответом, чертежами и графиками. Проверка ответов и версия для печати.';
- const a=document.createElement('a');a.className='button';a.href='EGE_pervye_12_test.html';a.textContent='Открыть тест';
+ const a=document.createElement('a');a.className='button';a.href='#ege-first12';a.textContent='Открыть тест';
  card.append(h,p,a);root.append(card);
 }
 const previousExam=renderExam;
@@ -1968,8 +1968,21 @@ const previousCatalog=renderCatalog;
 renderCatalog=function(subject){previousCatalog.apply(this,arguments);if(subject==='math'&&arguments[1]==null)addEgeCollection();};
 })();
 </script>
+<style>
+#extra-root.ege-collection .ege-task-content{font-size:18px;line-height:1.65}
+#extra-root.ege-collection svg{display:block;width:100%;max-width:760px;height:auto;margin:24px auto;background:white;border-radius:16px}
+#extra-root.ege-collection .frac{display:inline-flex;vertical-align:middle;flex-direction:column;text-align:center;line-height:1.35;margin:0 8px}
+#extra-root.ege-collection .frac>span:first-child{border-bottom:1.5px solid;padding:0 8px 4px}
+#extra-root.ege-collection .frac>span:last-child{padding:4px 8px 0}
+#extra-root.ege-collection .formula{text-align:center;font-size:26px;padding:16px}
+#extra-root.ege-collection .ege-explanation{padding:18px;margin-top:16px;border-radius:12px;background:#ffffffb3}
+#extra-root.ege-collection .ege-progress{font-size:20px;font-weight:600}
+#extra-root.ege-collection table{border-collapse:collapse;width:100%;margin:16px 0}
+#extra-root.ege-collection td,#extra-root.ege-collection th{border:1px solid var(--blue);padding:10px;text-align:center}
+</style><script src="ege-collection.js?v=1"></script>
 </body>
 </html>
+
 
 
 
