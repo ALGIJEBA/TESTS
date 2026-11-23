@@ -54,7 +54,12 @@ function doPost(e) {
           item.correct ? 'Да' : 'Нет'
         ]);
         // Сначала подробные ответы, затем сводка. При повторном ID не дублируем сводку.
-        answers.getRange(answers.getLastRow() + 1, 1, answerRows.length, ANSWERS_HEADERS.length).setValues(answerRows);
+        // После частичного сбоя дописываем только отсутствующие ответы той же попытки.
+        const answerCount = answers.getLastRow() - 1;
+        const seen = new Set(answerCount > 0 ? answers.getRange(2, 2, answerCount, 4).getValues()
+          .filter(row => String(row[0]) === attemptId).map(row => Number(row[3])) : []);
+        const missingRows = answerRows.filter(row => !seen.has(row[4]));
+        if (missingRows.length) answers.getRange(answers.getLastRow() + 1, 1, missingRows.length, ANSWERS_HEADERS.length).setValues(missingRows);
         results.appendRow([
           now, attemptId, student, title, Number(data.total),
           Number(data.answered), Number(data.correct),
@@ -88,6 +93,8 @@ function validateAttempt_(d) {
   if (!Array.isArray(d.details) || d.details.length !== d.total) throw new Error('Неверное количество ответов');
   if (!Number.isInteger(d.correct) || d.correct < 0 || d.correct > d.total) throw new Error('Неверный балл');
   if (!Number.isInteger(d.answered) || d.answered < 0 || d.answered > d.total) throw new Error('Неверное число ответов');
+  if (d.correct > d.answered) throw new Error('Верных ответов больше, чем заполненных');
+  if (d.details.filter(item => item && item.correct === true).length !== d.correct) throw new Error('Балл не совпадает с подробными ответами');
   for (let i = 0; i < d.details.length; i++) {
     const item = d.details[i];
     if (!item || item.number !== i + 1 || typeof item.correct !== 'boolean') throw new Error('Неверные данные ответа №' + (i + 1));
@@ -109,6 +116,7 @@ function getSheet_(book, name, headers) {
 // Предотвращаем интерпретацию вводимого учениками текста как формулы Google Таблиц.
 function safeText_(value, maxLength) {
   let text = String(value === undefined || value === null ? '' : value).slice(0, maxLength);
-  if (/^[\\s]*[=+@-]/.test(text)) text = "'" + text;
+  if (/^\s*[=+@-]/.test(text)) text = "'" + text;
   return text;
 }
+
