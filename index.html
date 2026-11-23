@@ -1528,7 +1528,7 @@ function submitExtra(){
  const name=document.getElementById('extra-name').value.trim().replace(/\s+/g,' ');if(!name){document.getElementById('extra-status').textContent='Введите имя и фамилию.';return;}
  const selected=test.questions.map((q,i)=>{if(!q.options)return document.querySelector('[name="extra-open-'+i+'"]').value.trim();const r=document.querySelector('input[name="extra-'+i+'"]:checked');return r?Number(r.value):-1;});
  if(selected.some(v=>v===-1||v==='')&&!confirm('Есть пропущенные задания. Завершить тест?'))return;
- const details=test.questions.map((q,i)=>({number:i+1,question:q.q,answer:q.options?(q.options[selected[i]]||''):selected[i],expected:q.options?q.options[q.correctIndex]:q.answer,correct:q.options?selected[i]===q.correctIndex:numericAnswerMatches(selected[i],q.answer),topic:test.title}));
+ const details=test.questions.map((q,i)=>({number:i+1,question:q.q,answer:q.options?(q.options[selected[i]]||''):selected[i],expected:q.options?q.options[q.correctIndex]:q.answer,correct:q.options?selected[i]===q.correctIndex:(q.check?q.check(selected[i]):numericAnswerMatches(selected[i],q.answer)),topic:test.title}));
  const payload={attemptId:crypto.randomUUID?crypto.randomUUID():'attempt-'+Date.now()+'-'+Math.random().toString(36).slice(2),studentName:name,testTitle:test.title,submittedAt:new Date().toISOString(),total:details.length,answered:details.filter(d=>d.answer).length,correct:details.filter(d=>d.correct).length,details};
  extraStates.set(index,{payload,selected,saved:false,status:''});openExtra(index);sendExtra(index);
 }
@@ -2022,6 +2022,7 @@ lessonHTML=function(index){return index===viktoria6Index?"<h2>Сложные а�
 function openViktoria6(){if(location.hash==='#algebra-no-fsu-6'){catalogSelection={subject:'math',grade:7,topic:subjectCatalog.math.topics.find(t=>t.extra===viktoria6Index)};openExtra(viktoria6Index);addTestBreadcrumb();}}
 window.addEventListener('hashchange',openViktoria6);openViktoria6();
 </script>
+<script src="grade8-numbers-fractions.js?v=1"></script>
 </body>
 </html>
 
