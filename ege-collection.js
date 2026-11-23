@@ -13,7 +13,7 @@ openExtra=function(n){
  document.getElementById('extra-back').textContent='← Математика · ЕГЭ';
  const state=extraStates.get(n);
  root.querySelectorAll('.triangle-question').forEach((wrap,i)=>{
-  const content=document.createElement('div');content.className='ege-task-content';content.innerHTML=questions[i].html;
+  const content=document.createElement('div');content.className='ege-task-content';content.innerHTML=questions[i].html||'';
   wrap.firstElementChild.after(content);
   if(state){const detail=state.payload.details[i];wrap.classList.add(detail.correct?'correct-answer':'wrong-answer');
    const review=document.createElement('div');review.className='ege-explanation';
@@ -24,9 +24,10 @@ openExtra=function(n){
   }
  });
  const progress=document.createElement('div');progress.className='lesson-notes ege-progress';progress.setAttribute('aria-live','polite');
- const update=()=>{const count=state?state.payload.answered:[...root.querySelectorAll('input[name^="extra-open-"]')].filter(e=>e.value.trim()).length;progress.textContent='Заполнено: '+count+' из 12 · '+Math.round(count/12*100)+'%'+(state?' · Верно: '+state.payload.correct+' из 12 · '+Math.round(state.payload.correct/12*100)+'%':'');};
+ const update=()=>{const count=state?state.payload.answered:questions.filter((q,i)=>q.options?!!root.querySelector('input[name="extra-'+i+'"]:checked'):!!root.querySelector('[name="extra-open-'+i+'"]')?.value.trim()).length;const total=questions.length;progress.textContent='Заполнено: '+count+' из '+total+' · '+Math.round(count/total*100)+'%'+(state?' · Верно: '+state.payload.correct+' из '+total:'');};
  root.prepend(progress);root.addEventListener('input',update);update();formatMath(root);
 };
 document.addEventListener('click',event=>{const a=event.target.closest('a[href="EGE_pervye_12_test.html"],a[href="#ege-first12"]');if(a){event.preventDefault();location.hash='ege-first12';openExtra(index);}});
 if(location.hash==='#ege-first12')openExtra(index);
 })();
+
