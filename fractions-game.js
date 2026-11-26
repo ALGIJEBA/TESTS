@@ -69,7 +69,7 @@
   renderCatalog=function(subject,grade,topic,section){
     if(subject!=='math'||![5,6].includes(grade)){
       previous(subject,grade,topic,section);
-      if(subject==='math'&&!grade){const cards=document.querySelector('#math .cards');if(cards){for(const g of [6,5]){const card=document.createElement('div');card.className='card';const h=document.createElement('h3');h.textContent=g+' класс';card.append(h,catalogButton('Выбрать класс',()=>renderCatalog('math',g)));cards.prepend(card);}}}
+      if(subject==='math'&&!grade){const cards=document.querySelector('#math > .cards');if(cards){for(const g of [6,5]){const card=document.createElement('div');card.className='card';const h=document.createElement('h3');h.textContent=g+' класс';card.append(h,catalogButton('Выбрать класс',()=>renderCatalog('math',g)));cards.prepend(card);}}}
       return;
     }
     const root=document.getElementById('math');root.replaceChildren();catalogSelection={subject,grade,topic:null};const nav=document.createElement('nav');nav.className='breadcrumbs';nav.append(catalogButton('Математика',()=>renderCatalog('math')),'→',catalogButton(grade+' класс',()=>renderCatalog('math',grade)));root.append(nav);
