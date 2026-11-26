@@ -2037,8 +2037,62 @@ window.addEventListener('hashchange',openViktoria6);openViktoria6();
 <script src="division-grade5.js?v=1"></script>
 <script src="fractions-lessons-8.js?v=1"></script>
 <script src="materials-20261126.js?v=1"></script>
+
+<!-- confirmed-update-20261126 -->
+<script>
+/* Навигация по подтверждённому запросу: отдельные списки тестов и лабораторий. */
+(()=>{
+const previousCatalog=renderCatalog,previousExam=renderExam;
+const isLab=card=>/лаборатор|симуляци|опыты/i.test(card.textContent);
+function removeCollection(root){root.querySelectorAll('[data-ege-first12]').forEach(c=>c.remove());}
+function laboratoryCards(root){return [...root.querySelectorAll('.card')].filter(isLab);}
+function collectLabs(subject,grade){
+ const root=document.getElementById(subject),saved=[...root.childNodes],selection=catalogSelection;
+ const result=new Map();
+ const sections=subject==='math'?['Алгебра','Геометрия','ЕГЭ']:['Кинематика','Динамика','Механика'];
+ try{for(const section of sections){previousCatalog(subject,grade,null,section);for(const card of laboratoryCards(root)){const key=card.querySelector('h3')?.textContent+'|'+section;if(!result.has(key)){card.dataset.labSection=section;result.set(key,card);}}}}
+ finally{root.replaceChildren(...saved);catalogSelection=selection;}
+ return [...result.values()];
+}
+function separate(root,extra=[]){
+ const grid=root.querySelector('.cards');if(!grid)return;
+ const labs=new Map();
+ for(const card of [...laboratoryCards(root),...extra]){const name=card.querySelector('h3')?.textContent||card.textContent;if(!labs.has(name))labs.set(name,card);else card.remove();}
+ const labgrid=extraNode('div',undefined,'cards learning-labs');labgrid.id='learning-labs-'+root.id;
+ for(const card of labs.values())labgrid.append(card);
+ const tests=extraNode('button','Темы и тесты','button'),experiments=extraNode('button','Лаборатории · '+labs.size,'button');
+ tests.type=experiments.type='button';const tabs=extraNode('nav',undefined,'learning-tabs');tabs.setAttribute('aria-label','Вид учебных материалов');tabs.append(tests,experiments);grid.before(tabs);grid.after(labgrid);
+ function select(lab){grid.hidden=lab;labgrid.hidden=!lab;tests.setAttribute('aria-pressed',String(!lab));experiments.setAttribute('aria-pressed',String(lab));}
+ tests.onclick=()=>select(false);experiments.onclick=()=>select(true);select(false);
+ if(!labs.size)labgrid.append(extraNode('p','Лаборатории для этого раздела пока не добавлены.'));
+}
+renderCatalog=function(subject,grade,topic,section){
+ previousCatalog.apply(this,arguments);const root=document.getElementById(subject);removeCollection(root);
+ if(grade&&(!topic||typeof topic==='object'))separate(root,!topic&&!section?collectLabs(subject,grade):[]);
+};
+renderExam=function(){previousExam.apply(this,arguments);removeCollection(document.getElementById(arguments[0]));};
+function showLaboratories(){
+ let root=document.getElementById('laboratories');if(!root){root=extraNode('section',undefined,'page');root.id='laboratories';document.querySelector('main').append(root);}
+ root.replaceChildren(extraNode('h1','Интерактивные лаборатории'));
+ root.append(extraNode('p','Выбери предмет и класс. Опыты отделены от проверочных тестов.'));
+ for(const subject of ['math','physics'])for(let grade=7;grade<=11;grade++){
+  const labs=collectLabs(subject,grade);if(!labs.length)continue;
+  const section=extraNode('section',undefined,'section');section.append(extraNode('h2',subjectCatalog[subject].title+' · '+grade+' класс'));const cards=extraNode('div',undefined,'cards');
+  const seen=new Set();for(const card of labs){const key=card.querySelector('h3')?.textContent;if(seen.has(key))continue;seen.add(key);cards.append(card);}section.append(cards);root.append(section);
+ }
+ showPageOriginal('laboratories');
+}
+const button=extraNode('button','⚗ Лаборатории','menu-link');button.type='button';button.dataset.page='laboratories';button.onclick=showLaboratories;document.querySelector('aside').append(button);
+const previousShow=showPage;showPage=function(id){if(id==='laboratories')return showLaboratories();return previousShow.apply(this,arguments);};
+const css=document.createElement('style');css.textContent='.learning-tabs{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0}.learning-tabs [aria-pressed=true]{outline:2px solid #7198b8}.cards[hidden]{display:none!important}.learning-labs .card{border-color:#b8d9e7}';document.head.append(css);
+removeCollection(document);
+const active=document.querySelector('.page.active');if(active&&subjectCatalog[active.id])renderCatalog(active.id);
+})();
+
+</script>
 </body>
 </html>
+
 
 
 
