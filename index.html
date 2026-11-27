@@ -2051,7 +2051,7 @@ function laboratoryCards(root){return [...root.querySelectorAll('.card')].filter
 function collectLabs(subject,grade){
  const root=document.getElementById(subject),saved=[...root.childNodes],selection=catalogSelection;
  const result=new Map();
- const sections=subject==='math'?['Алгебра','Геометрия','ЕГЭ']:['Кинематика','Динамика','Механика'];
+ const sections=subject==='math'?['Арифметика','Алгебра','Геометрия','ЕГЭ']:['Кинематика','Динамика','Механика'];
  try{for(const section of sections){previousCatalog(subject,grade,null,section);for(const card of laboratoryCards(root)){const key=card.querySelector('h3')?.textContent+'|'+section;if(!result.has(key)){card.dataset.labSection=section;result.set(key,card);}}}}
  finally{root.replaceChildren(...saved);catalogSelection=selection;}
  return [...result.values()];
@@ -2077,7 +2077,7 @@ function showLaboratories(){
  let root=document.getElementById('laboratories');if(!root){root=extraNode('section',undefined,'page');root.id='laboratories';document.querySelector('main').append(root);}
  root.replaceChildren(extraNode('h1','Интерактивные лаборатории'));
  root.append(extraNode('p','Выбери предмет и класс. Опыты отделены от проверочных тестов.'));
- for(const subject of ['math','physics'])for(let grade=7;grade<=11;grade++){
+ for(const subject of ['math','physics'])for(let grade=5;grade<=11;grade++){
   const labs=collectLabs(subject,grade);if(!labs.length)continue;
   const section=extraNode('section',undefined,'section');section.append(extraNode('h2',subjectCatalog[subject].title+' · '+grade+' класс'));const cards=extraNode('div',undefined,'cards');
   const seen=new Set();for(const card of labs){const key=card.querySelector('h3')?.textContent;if(seen.has(key))continue;seen.add(key);cards.append(card);}section.append(cards);root.append(section);
