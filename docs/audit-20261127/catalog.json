@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "22522a9bc6823779660465bfd36b9b14228a9059",
+  "sourceCommit": "8382553da0f9ab602884abaf75b02435cbc416d7",
   "rows": [
     {
       "subject": "math",
@@ -467,6 +467,16 @@
       "test": 51
     },
     {
+      "subject": "math",
+      "grades": [
+        5
+      ],
+      "name": "Разряды и классы многозначных чисел",
+      "route": "#nav/test/52",
+      "type": "test",
+      "test": 52
+    },
+    {
       "subject": "physics",
       "grades": [
         10
@@ -921,6 +931,13 @@
       "count": 15,
       "open": 5,
       "missingExplanations": 0
+    },
+    {
+      "index": 52,
+      "title": "Разряды и классы многозначных чисел · 5 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
     }
   ],
   "legacyHashes": [
@@ -929,7 +946,9 @@
     "fractions-hard-7",
     "algebra-no-fsu-6",
     "like-terms-7",
-    "negative-powers"
+    "negative-powers",
+    "place-value-5",
+    "columns-5"
   ],
   "limitations": "DOM integration; no real layout, graph rendering, submissions or full answer verification"
 }
