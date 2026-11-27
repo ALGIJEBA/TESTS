@@ -1,0 +1,935 @@
+{
+  "sourceCommit": "22522a9bc6823779660465bfd36b9b14228a9059",
+  "rows": [
+    {
+      "subject": "math",
+      "grades": [
+        7
+      ],
+      "name": "Обыкновенные дроби",
+      "route": "#nav/test/0",
+      "type": "test",
+      "test": 0
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7
+      ],
+      "name": "Скобки и уравнения",
+      "route": "#nav/test/1",
+      "type": "test",
+      "test": 1
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7
+      ],
+      "name": "Общий множитель и формулы",
+      "route": "#nav/test/2",
+      "type": "test",
+      "test": 2
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7,
+        8,
+        9
+      ],
+      "name": "Треугольники",
+      "route": "triangles",
+      "type": "trainer"
+    },
+    {
+      "subject": "math",
+      "grades": [
+        10,
+        11
+      ],
+      "name": "Тригонометрия",
+      "route": "trigonometry",
+      "type": "trainer"
+    },
+    {
+      "subject": "math",
+      "grades": [
+        9,
+        10,
+        11
+      ],
+      "name": "Текстовые задачи: движение и работа",
+      "route": "#nav/test/3",
+      "type": "test",
+      "test": 3
+    },
+    {
+      "subject": "math",
+      "grades": [
+        9,
+        10,
+        11
+      ],
+      "name": "Проценты, смеси и прогрессии",
+      "route": "#nav/test/4",
+      "type": "test",
+      "test": 4
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "Квадратные корни и ОДЗ",
+      "route": "#nav/test/8",
+      "type": "test",
+      "test": 8
+    },
+    {
+      "subject": "math",
+      "grades": [
+        10,
+        11
+      ],
+      "name": "Графики функций и правила их анализа",
+      "route": "#nav/test/9",
+      "type": "test",
+      "test": 9
+    },
+    {
+      "subject": "math",
+      "grades": [
+        10,
+        11
+      ],
+      "name": "Случайные величины: ожидание и дисперсия",
+      "route": "#nav/test/10",
+      "type": "test",
+      "test": 10
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7
+      ],
+      "name": "Составление уравнений по условию",
+      "route": "#nav/test/11",
+      "type": "test",
+      "test": 11
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "Функции и графики",
+      "route": "#nav/test/16",
+      "type": "test",
+      "test": 16
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "Алгебра: комплексный тест · 8 класс",
+      "route": "#nav/test/17",
+      "type": "test",
+      "test": 17
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "Геометрия: комплексный тест · 8 класс",
+      "route": "#nav/test/18",
+      "type": "test",
+      "test": 18
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "ФСУ",
+      "route": "#nav/test/19",
+      "type": "test",
+      "test": 19
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7
+      ],
+      "name": "Уравнения с дробями",
+      "route": "#nav/test/21",
+      "type": "test",
+      "test": 21
+    },
+    {
+      "subject": "math",
+      "grades": [
+        11
+      ],
+      "name": "Сборник: 15 заданий",
+      "route": "#nav/test/22",
+      "type": "test",
+      "test": 22
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7
+      ],
+      "name": "ФСУ: выбор способа и уравнения",
+      "route": "#nav/test/23",
+      "type": "test",
+      "test": 23
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7
+      ],
+      "name": "Сложные линейные уравнения",
+      "route": "#nav/test/24",
+      "type": "test",
+      "test": 24
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7
+      ],
+      "name": "Сложные задания с дробями без ФСУ",
+      "route": "#nav/test/25",
+      "type": "test",
+      "test": 25
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7
+      ],
+      "name": "Сложные преобразования без ФСУ · занятие 6",
+      "route": "#nav/test/26",
+      "type": "test",
+      "test": 26
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "Рациональные числа",
+      "route": "#nav/test/27",
+      "type": "test",
+      "test": 27
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "Алгебраические дроби",
+      "route": "#nav/test/28",
+      "type": "test",
+      "test": 28
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "Степень с отрицательным показателем",
+      "route": "#nav/test/29",
+      "type": "test",
+      "test": 29
+    },
+    {
+      "subject": "math",
+      "grades": [
+        11
+      ],
+      "name": "Повторение и текстовые задачи",
+      "route": "#nav/test/30",
+      "type": "test",
+      "test": 30
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7,
+        8,
+        9
+      ],
+      "name": "Треугольники: углы, стороны и равенство",
+      "route": "#nav/test/31",
+      "type": "test",
+      "test": 31
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7,
+        8,
+        9
+      ],
+      "name": "Треугольники: построения и подобие",
+      "route": "#nav/test/32",
+      "type": "test",
+      "test": 32
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7,
+        8,
+        9
+      ],
+      "name": "Треугольники: площади и комбинированные задачи",
+      "route": "#nav/test/33",
+      "type": "test",
+      "test": 33
+    },
+    {
+      "subject": "math",
+      "grades": [
+        10,
+        11
+      ],
+      "name": "Тригонометрия: окружность и выражения",
+      "route": "#nav/test/34",
+      "type": "test",
+      "test": 34
+    },
+    {
+      "subject": "math",
+      "grades": [
+        10,
+        11
+      ],
+      "name": "Тригонометрия: уравнения и отбор корней",
+      "route": "#nav/test/35",
+      "type": "test",
+      "test": 35
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7
+      ],
+      "name": "Подобные слагаемые: знаки, дроби и скобки",
+      "route": "#nav/test/36",
+      "type": "test",
+      "test": 36
+    },
+    {
+      "subject": "math",
+      "grades": [
+        5
+      ],
+      "name": "Сложение и вычитание многозначных чисел в столбик",
+      "route": "#nav/test/37",
+      "type": "test",
+      "test": 37
+    },
+    {
+      "subject": "math",
+      "grades": [
+        5
+      ],
+      "name": "Подготовка к делению в столбик",
+      "route": "#nav/test/38",
+      "type": "test",
+      "test": 38
+    },
+    {
+      "subject": "math",
+      "grades": [
+        5
+      ],
+      "name": "Деление на однозначное число",
+      "route": "#nav/test/39",
+      "type": "test",
+      "test": 39
+    },
+    {
+      "subject": "math",
+      "grades": [
+        5
+      ],
+      "name": "Деление многозначных чисел",
+      "route": "#nav/test/40",
+      "type": "test",
+      "test": 40
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "Деление с остатком и обыкновенные дроби",
+      "route": "#nav/test/41",
+      "type": "test",
+      "test": 41
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "Все действия с обыкновенными и алгебраическими дробями",
+      "route": "#nav/test/42",
+      "type": "test",
+      "test": 42
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "Сложные выражения: ФСУ и общий множитель",
+      "route": "#nav/test/43",
+      "type": "test",
+      "test": 43
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "Корни, целые степени и контроль знаков",
+      "route": "#nav/test/44",
+      "type": "test",
+      "test": 44
+    },
+    {
+      "subject": "math",
+      "grades": [
+        8
+      ],
+      "name": "Алгебраические дроби: разложение и сохранение ОДЗ",
+      "route": "#nav/test/45",
+      "type": "test",
+      "test": 45
+    },
+    {
+      "subject": "math",
+      "grades": [
+        7
+      ],
+      "name": "Повторение алгебраических преобразований",
+      "route": "#nav/test/46",
+      "type": "test",
+      "test": 46
+    },
+    {
+      "subject": "math",
+      "grades": [
+        6
+      ],
+      "name": "Признаки делимости",
+      "route": "#nav/test/47",
+      "type": "test",
+      "test": 47
+    },
+    {
+      "subject": "math",
+      "grades": [
+        6
+      ],
+      "name": "Проценты: смысл и часть от числа",
+      "route": "#nav/test/49",
+      "type": "test",
+      "test": 49
+    },
+    {
+      "subject": "math",
+      "grades": [
+        6
+      ],
+      "name": "Нахождение целого по его части",
+      "route": "#nav/test/50",
+      "type": "test",
+      "test": 50
+    },
+    {
+      "subject": "math",
+      "grades": [
+        6
+      ],
+      "name": "Умножение в столбик на однозначное число",
+      "route": "#nav/test/51",
+      "type": "test",
+      "test": 51
+    },
+    {
+      "subject": "physics",
+      "grades": [
+        10
+      ],
+      "name": "Кинематика и графики",
+      "route": "#nav/test/5",
+      "type": "test",
+      "test": 5
+    },
+    {
+      "subject": "physics",
+      "grades": [
+        10
+      ],
+      "name": "Динамика: законы Ньютона",
+      "route": "#nav/test/6",
+      "type": "test",
+      "test": 6
+    },
+    {
+      "subject": "physics",
+      "grades": [
+        10
+      ],
+      "name": "Энергия, окружность и период",
+      "route": "#nav/test/7",
+      "type": "test",
+      "test": 7
+    },
+    {
+      "subject": "physics",
+      "grades": [
+        10
+      ],
+      "name": "Работа, мощность и энергия · новый тест",
+      "route": "#nav/test/12",
+      "type": "test",
+      "test": 12
+    },
+    {
+      "subject": "physics",
+      "grades": [
+        10
+      ],
+      "name": "Движение по окружности · новый тест",
+      "route": "#nav/test/13",
+      "type": "test",
+      "test": 13
+    },
+    {
+      "subject": "physics",
+      "grades": [
+        10
+      ],
+      "name": "Кинематика · новый тест",
+      "route": "#nav/test/14",
+      "type": "test",
+      "test": 14
+    },
+    {
+      "subject": "physics",
+      "grades": [
+        10
+      ],
+      "name": "Периодическое движение и колебания · новый тест",
+      "route": "#nav/test/15",
+      "type": "test",
+      "test": 15
+    },
+    {
+      "subject": "physics",
+      "grades": [
+        10
+      ],
+      "name": "Третий закон Ньютона и виды сил",
+      "route": "#nav/test/20",
+      "type": "test",
+      "test": 20
+    },
+    {
+      "subject": "physics",
+      "grades": [
+        8
+      ],
+      "name": "Паровой двигатель и КПД",
+      "route": "#nav/test/48",
+      "type": "test",
+      "test": 48
+    }
+  ],
+  "tests": [
+    {
+      "index": 0,
+      "title": "Обыкновенные дроби",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 1,
+      "title": "Скобки и уравнения",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 2,
+      "title": "Общий множитель и формулы",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 3,
+      "title": "Текстовые задачи: движение и работа",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 4,
+      "title": "Проценты, смеси и прогрессии",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 5,
+      "title": "Кинематика и графики",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 6,
+      "title": "Динамика: законы Ньютона",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 7,
+      "title": "Энергия, окружность и период",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 8,
+      "title": "Квадратные корни и ОДЗ",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 9,
+      "title": "Графики функций и правила их анализа",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 10,
+      "title": "Случайные величины: ожидание и дисперсия",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 11,
+      "title": "Составление уравнений по условию",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 12,
+      "title": "Работа, мощность и энергия · новый тест",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 13,
+      "title": "Движение по окружности · новый тест",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 14,
+      "title": "Кинематика · новый тест",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 15,
+      "title": "Периодическое движение и колебания · новый тест",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 16,
+      "title": "Функции и графики · 8 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 17,
+      "title": "Алгебра: комплексный тест · 8 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 18,
+      "title": "Геометрия: комплексный тест · 8 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 19,
+      "title": "ФСУ",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 20,
+      "title": "Третий закон Ньютона и виды сил · 10 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 21,
+      "title": "Уравнения с дробями · 7 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 22,
+      "title": "ЕГЭ · Сборник: 15 заданий",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 23,
+      "title": "ФСУ: выбор способа и уравнения · 7 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 24,
+      "title": "Сложные линейные уравнения · 7 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 25,
+      "title": "Сложные задания с дробями без ФСУ · 7 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 26,
+      "title": "Сложные преобразования без ФСУ · занятие 6 · 7 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 27,
+      "title": "Рациональные числа · 8 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 28,
+      "title": "Алгебраические дроби · 8 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 29,
+      "title": "Степень с отрицательным показателем",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 30,
+      "title": "ЕГЭ · Повторение и текстовые задачи",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 31,
+      "title": "Треугольники: углы, стороны и равенство",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 32,
+      "title": "Треугольники: построения и подобие",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 33,
+      "title": "Треугольники: площади и комбинированные задачи",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 34,
+      "title": "Тригонометрия: окружность и выражения",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 35,
+      "title": "Тригонометрия: уравнения и отбор корней",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 36,
+      "title": "Подобные слагаемые: знаки, дроби и скобки · 7 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 37,
+      "title": "Сложение и вычитание многозначных чисел в столбик · 5 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 38,
+      "title": "Подготовка к делению в столбик · 5 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 39,
+      "title": "Деление на однозначное число · 5 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 40,
+      "title": "Деление многозначных чисел · 5 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 41,
+      "title": "Деление с остатком и обыкновенные дроби · 8 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 42,
+      "title": "Все действия с обыкновенными и алгебраическими дробями · 8 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 43,
+      "title": "Сложные выражения: ФСУ и общий множитель · 8 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 44,
+      "title": "Корни, целые степени и контроль знаков · 8 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 45,
+      "title": "Алгебраические дроби: разложение и сохранение ОДЗ · 8 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 46,
+      "title": "Повторение алгебраических преобразований · 7 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 47,
+      "title": "Признаки делимости · 6 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 48,
+      "title": "Паровой двигатель и КПД · 8 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 49,
+      "title": "Проценты: смысл и часть от числа · 6 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 50,
+      "title": "Нахождение целого по его части · 6 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    },
+    {
+      "index": 51,
+      "title": "Умножение в столбик на однозначное число · 6 класс",
+      "count": 15,
+      "open": 5,
+      "missingExplanations": 0
+    }
+  ],
+  "legacyHashes": [
+    "ege-first12",
+    "ege-repeat-models",
+    "fractions-hard-7",
+    "algebra-no-fsu-6",
+    "like-terms-7",
+    "negative-powers"
+  ],
+  "limitations": "DOM integration; no real layout, graph rendering, submissions or full answer verification"
+}

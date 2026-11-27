@@ -1,0 +1,20 @@
+// Run: npm install --no-save --prefix /tmp/tests-audit jsdom
+// NODE_PATH=/tmp/tests-audit/node_modules node tests/navigation-20261127.cjs
+const {JSDOM,VirtualConsole}=require('jsdom');const fs=require('fs'),path=require('path'),assert=require('assert');
+const root=path.resolve(__dirname,'..');const errors=[],network=[];const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8').replace(/<script src="([^"]+)"><\/script>/g,(_,src)=>'<script>'+fs.readFileSync(path.join(root,src.split('?')[0]),'utf8')+'</script>');
+(async()=>{const dom=new JSDOM(html,{url:'https://algijeba.github.io/TESTS/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc,beforeParse(w){w.scrollTo=()=>{};w.fetch=(url)=>{network.push(url);return Promise.reject(Error('Requests disabled during audit'));};w.requestAnimationFrame=()=>0;const ctx=new Proxy({measureText:()=>({width:30}),createLinearGradient:()=>({addColorStop(){}})},{get:(o,k)=>o[k]||(()=>{})});w.HTMLCanvasElement.prototype.getContext=()=>ctx;}});const w=dom.window;await new Promise(r=>w.addEventListener('load',()=>setTimeout(r,100)));
+const data=w.eval(`({topics:subjectCatalog,tests:extraTests.map((t,i)=>({index:i,title:t.title,count:t.questions.length,open:t.questions.filter(q=>!q.options).length,missingExplanations:t.questions.filter(q=>!q.explanation).length}))})`);
+const inventory=[];for(const [s,v] of Object.entries(data.topics))for(const t of v.topics){assert(t.extra===undefined||data.tests[t.extra]);inventory.push({subject:s,grades:t.grades,name:t.name,route:t.extra===undefined?t.page:'#nav/test/'+t.extra,type:t.extra===undefined?'trainer':'test',test:t.extra});}
+for(const t of data.tests){assert.equal(t.count,15);assert.equal(t.open,5);assert.equal(t.missingExplanations,0);assert(inventory.some(r=>r.test===t.index));w.eval('openExtra('+t.index+')');assert(w.document.querySelector('#extra-root').textContent.length>100);}
+w.eval("renderCatalog('math',5)");assert(w.document.querySelector('#math').textContent.includes('Подготовка к делению'));assert(!w.document.querySelector('#math').textContent.includes('Пошаговый разбор'));
+for(const [s,min] of [['math',5],['physics',7]])for(let g=min;g<=11;g++){w.eval(`renderCatalog('${s}',${g})`);assert(w.document.querySelector('#'+s+' h1').textContent.includes(g+' класс'));}
+w.eval("showPage('laboratories')");assert.equal(w.document.querySelectorAll('#laboratories article').length,14);
+const titles=[...w.document.querySelectorAll('#laboratories h3')].map(n=>n.textContent);
+for(const title of titles){w.eval("showPage('laboratories')");const card=[...w.document.querySelectorAll('#laboratories article')].find(c=>c.querySelector('h3').textContent===title);card.querySelector('button').click();assert(w.document.querySelector('.page.active').textContent.includes('Все лаборатории'),title+' '+errors.join(';'));}
+// Existing public hashes still have their original listeners; exercise each literal handler.
+const legacy=new Set();for(const filename of fs.readdirSync(root).filter(f=>/\.(js|html)$/.test(f)&&f!=='navigation-preview.js')){const text=fs.readFileSync(path.join(root,filename),'utf8');for(const m of text.matchAll(/location\.hash\s*===?\s*['"]#([^'"]+)['"]/g))if(!m[1].includes('+'))legacy.add(m[1]);}
+for(const hash of legacy){w.location.hash=hash;w.dispatchEvent(new w.HashChangeEvent('hashchange'));assert(w.document.querySelector('.page.active'));}
+assert.equal(network.length,0);assert.deepEqual(errors,[]);
+if(process.env.AUDIT_OUTPUT){fs.mkdirSync(process.env.AUDIT_OUTPUT,{recursive:true});fs.writeFileSync(path.join(process.env.AUDIT_OUTPUT,'catalog.json'),JSON.stringify({sourceCommit:'22522a9bc6823779660465bfd36b9b14228a9059',rows:inventory,tests:data.tests,legacyHashes:[...legacy],limitations:'DOM integration; no real layout, graph rendering, submissions or full answer verification'},null,2));}
+console.log(JSON.stringify({testsOpened:data.tests.length,catalogEntries:inventory.length,labsOpened:titles.length,legacyLiteralHashes:legacy.size,errors,networkRequests:network.length}));dom.window.close();})();
