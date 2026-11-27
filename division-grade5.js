@@ -32,7 +32,7 @@ lessons.forEach((l,k)=>{
 const prevLesson=lessonHTML;
 lessonHTML=function(index){
  const l=lessons[index-start];if(!l)return prevLesson(index);
- return '<h2>'+l.title+'</h2><p>5 класс · '+l.date+' · 60 минут</p><h3>Главные принципы</h3><ul>'+l.rules.map(r=>'<li>'+r+'</li>').join('')+'</ul>'+((index-start)>0?diagram(index-start===1?846:1248,index-start===1?3:4):'')+'<div data-division-lab="'+(index-start)+'"></div><h3>Занятие</h3><p>'+l.practice+'</p><h3>Домашнее задание</h3><p>'+l.hw+'</p><details><summary>Ответы для преподавателя</summary><p>'+l.answers+'</p></details><h3>Проверочный тест</h3><p>15 вопросов: 10 с выбором и 5 открытых. Решай в тетради. После завершения доступны процент, разбор и результаты по темам.</p>';
+ return '<h2>'+l.title+'</h2><p>5 класс · '+l.date+' · 60 минут</p><h3>Главные принципы</h3><ul>'+l.rules.map(r=>'<li>'+r+'</li>').join('')+'</ul>'+((index-start)>0?diagram(index-start===1?846:1248,index-start===1?3:4):'')+'<div data-division-lesson="'+(index-start)+'"></div><h3>Занятие</h3><p>'+l.practice+'</p><h3>Домашнее задание</h3><p>'+l.hw+'</p><details><summary>Ответы для преподавателя</summary><p>'+l.answers+'</p></details><h3>Проверочный тест</h3><p>15 вопросов: 10 с выбором и 5 открытых. Решай в тетради. После завершения доступны процент, разбор и результаты по темам.</p>';
 };
 function lab(root,k){
  if(k===0){
@@ -47,9 +47,9 @@ function lab(root,k){
  buttons[0].onclick=()=>{s--;render();};buttons[1].onclick=()=>{s++;render();};buttons[2].onclick=()=>{e=(e+1)%examples.length;s=0;render();};render();
  }
 }
-const prevOpen=openExtra;openExtra=function(index){prevOpen(index);if(index<start||index>=start+lessons.length)return;document.getElementById('extra-back').textContent='← К математике';document.querySelectorAll('[data-division-lab]').forEach(el=>lab(el,Number(el.dataset.divisionLab)));};
-const prevCatalog=renderCatalog;renderCatalog=function(...args){prevCatalog(...args);document.querySelectorAll('[data-division-lab]').forEach(el=>lab(el,Number(el.dataset.divisionLab)));};
+const prevOpen=openExtra;openExtra=function(index){prevOpen(index);if(index<start||index>=start+lessons.length)return;document.getElementById('extra-back').textContent='← К математике';document.querySelectorAll('[data-division-lesson]').forEach(el=>lab(el,Number(el.dataset.divisionLesson)));};
+const prevCatalog=renderCatalog;renderCatalog=function(...args){prevCatalog(...args);document.querySelectorAll('[data-division-lesson]').forEach(el=>lab(el,Number(el.dataset.divisionLesson)));};
 function link(){const k=lessons.findIndex(l=>location.hash==='#'+l.hash);if(k<0)return;catalogSelection={subject:'math',grade:5,topic:subjectCatalog.math.topics.find(t=>t.extra===start+k)};openExtra(start+k);addTestBreadcrumb();}
 window.addEventListener('hashchange',link);link();
-const style=document.createElement('style');style.textContent='.division-boxes{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0}.division-boxes .card{min-width:130px;color:#5b86a8} [data-division-lab]{padding:18px;background:#f0f8ff;border-radius:15px;margin:18px 0} [data-division-lab] select{font:inherit;padding:8px}';document.head.append(style);
+const style=document.createElement('style');style.textContent='.division-boxes{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0}.division-boxes .card{min-width:130px;color:#5b86a8} [data-division-lesson]{padding:18px;background:#f0f8ff;border-radius:15px;margin:18px 0} [data-division-lesson] select{font:inherit;padding:8px}';document.head.append(style);
 })();
